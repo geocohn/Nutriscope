@@ -1,0 +1,59 @@
+package com.creationgroundmedia.nutriscope.data;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import com.creationgroundmedia.nutriscope.data.NutriscopeContract.ProductsEntry;
+
+/**
+ * Created by geo on 7/4/16.
+ */
+
+public class NutriscopeDbHelper extends SQLiteOpenHelper {
+
+    // If you change the database schema, you must increment the database version.
+    private static final int DATABASE_VERSION = 1;
+
+    public static final String DATABASE_NAME = "nutriscope.db";
+
+    public NutriscopeDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " + ProductsEntry.TABLE_NAME + " (" +
+                ProductsEntry._ID + " INTEGER PRIMARY KEY," +
+                ProductsEntry.COLUMN_ADDITIVES + " TEXT, " +
+                ProductsEntry.COLUMN_ALLERGENS + " TEXT, " +
+                ProductsEntry.COLUMN_BRANDS + " TEXT, " +
+                ProductsEntry.COLUMN_CATEGORIES + " TEXT, " +
+                ProductsEntry.COLUMN_CITY + " TEXT, " +
+                ProductsEntry.COLUMN_ENERGY + " TEXT, " +
+                ProductsEntry.COLUMN_FATS + " TEXT, " +
+                ProductsEntry.COLUMN_IMAGE + " TEXT, " + // imageUrl
+                ProductsEntry.COLUMN_IMAGESMALL + " TEXT, " + // imageSmallUrl
+                ProductsEntry.COLUMN_IMAGETHUMB + " TEXT, " + // imageThumbUrl
+                ProductsEntry.COLUMN_INGREDIENTS + " TEXT, " +
+                ProductsEntry.COLUMN_INGREDIENTSIMAGE + " TEXT, " + // imageIngredientsUrl
+                ProductsEntry.COLUMN_LABELS + " TEXT, " +
+                ProductsEntry.COLUMN_NAME + " TEXT, " +
+                ProductsEntry.COLUMN_PACKAGING + " TEXT, " +
+                ProductsEntry.COLUMN_PRODUCTID + " TEXT UNIQUE NOT NULL, " +
+                ProductsEntry.COLUMN_QUANTITY + " TEXT, " +
+                ProductsEntry.COLUMN_SALT + " TEXT, " +
+                ProductsEntry.COLUMN_SATURATEDFATS + " TEXT, " +
+                ProductsEntry.COLUMN_STORES + " TEXT, " +
+                ProductsEntry.COLUMN_SUGARS + " TEXT, " +
+                ProductsEntry.COLUMN_TRACES + " TEXT );";
+
+        sqLiteDatabase.execSQL(SQL_CREATE_LOCATION_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ProductsEntry.TABLE_NAME);
+        onCreate(sqLiteDatabase);
+    }
+}
