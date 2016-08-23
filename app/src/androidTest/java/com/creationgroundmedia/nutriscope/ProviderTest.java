@@ -38,7 +38,7 @@ public class ProviderTest {
 
     @Test
     public void testProviderUris() throws Exception {
-        String productSearchKey = "chocolate stuff";
+        String productSearchKey = "chocolate";
         String upcSearchKey = "76223006xxxxx";
         long productId = 7622300623456L;
         Uri uri;
@@ -58,10 +58,10 @@ public class ProviderTest {
     public void testSearchService() throws Exception {
         deleteDatabase();
 
-        String productSearchKey = "chocolate stuff";
+        String productSearchKey = "msg";
         Context mContext = InstrumentationRegistry.getTargetContext();
 
-        SearchService.startActionProductSearch(mContext, productSearchKey, 5);
+        SearchService.startActionProductSearch(mContext, productSearchKey, 10);
 
         Cursor countCursor = mContext.getContentResolver().query(NutriscopeContract.ProductsEntry.buildProductSearchUri(productSearchKey),
                 new String[] {"count(*) AS count"},
@@ -72,8 +72,39 @@ public class ProviderTest {
         countCursor.moveToFirst();
         int count = countCursor.getInt(0);
 
+        mContext.getContentResolver()
+        .acquireContentProviderClient(NutriscopeContract.ProductsEntry.buildProductSearchUri(productSearchKey))
+        .getLocalContentProvider()
+                .shutdown();
+
         Log.d(LOG_TAG, "testSearchService count: " + count);
         assertTrue(count != 0);
+    }
 
+    @Test
+    public void testUpcService() throws Exception {
+        deleteDatabase();
+
+        String upcSearchKey = "76223006xxxxx";
+        Context mContext = InstrumentationRegistry.getTargetContext();
+
+        SearchService.startActionUpcSearch(mContext, upcSearchKey, 10);
+
+        Cursor countCursor = mContext.getContentResolver().query(NutriscopeContract.ProductsEntry.buildProductSearchUri(upcSearchKey),
+                new String[] {"count(*) AS count"},
+                null,
+                null,
+                null);
+
+        countCursor.moveToFirst();
+        int count = countCursor.getInt(0);
+
+        mContext.getContentResolver()
+                .acquireContentProviderClient(NutriscopeContract.ProductsEntry.buildProductSearchUri(upcSearchKey))
+                .getLocalContentProvider()
+                .shutdown();
+
+        Log.d(LOG_TAG, "testUpcService count: " + count);
+        assertTrue(count != 0);
     }
 }

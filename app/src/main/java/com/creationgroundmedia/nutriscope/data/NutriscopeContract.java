@@ -27,11 +27,11 @@ public class NutriscopeContract {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PRODUCTS).build();
         public static final Uri PRODUCTSEARCH_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PRODUCTSEARCH).build();
+                CONTENT_URI.buildUpon().appendPath(PATH_PRODUCTSEARCH).build();
         public static final Uri UPCSEARCH_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_UPCSEARCH).build();
+                CONTENT_URI.buildUpon().appendPath(PATH_UPCSEARCH).build();
         public static final Uri UPC_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_UPC).build();
+                CONTENT_URI.buildUpon().appendPath(PATH_UPC).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;

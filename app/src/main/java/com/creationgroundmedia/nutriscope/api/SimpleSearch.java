@@ -33,7 +33,7 @@ public class SimpleSearch {
 
         SimpleSearchRetrofit.HttpService service = mRetrofit.create(SimpleSearchRetrofit.HttpService.class);
 
-        Call<ApiSearchResult> call = service.search(key, page);
+        Call<ApiSearchResult> call = service.search(key, Integer.toString(page));
 
         Log.d(LOG_TAG, "HTTP: " + call.request().url());
 
@@ -44,6 +44,7 @@ public class SimpleSearch {
                 if (response.isSuccessful()) {
                     ApiSearchResult result = response.body();
                     Log.d(LOG_TAG, "Count: " + result.getCount());
+                    Log.d(LOG_TAG, "PageSize: " + result.getPageSize());
                     sr.result(result);
                 } else {
                     sr.result(null);

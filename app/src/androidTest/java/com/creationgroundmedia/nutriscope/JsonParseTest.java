@@ -45,7 +45,7 @@ public class JsonParseTest {
 
         SimpleSearchRetrofit.HttpService service = retrofit.create(SimpleSearchRetrofit.HttpService.class);
 
-        Call<ApiSearchResult> call = service.search("chocolate");
+        Call<ApiSearchResult> call = service.search("chocolate", Integer.toString(1));
 
         Log.d(LOG_TAG, "HTTP: " + call.request().url());
 
@@ -167,7 +167,7 @@ public class JsonParseTest {
         SimpleSearch simpleSearch = new SimpleSearch();
 
         searchResult = null;
-        simpleSearch.search("msg", new SimpleSearch.SearchResult() {
+        simpleSearch.search("msg", 1, new SimpleSearch.SearchResult() {
             @Override
             public void result(ApiSearchResult r) {
                 searchResult = r;

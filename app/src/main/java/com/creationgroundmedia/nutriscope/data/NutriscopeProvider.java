@@ -31,17 +31,47 @@ public class NutriscopeProvider extends ContentProvider {
         final String authority = NutriscopeContract.CONTENT_AUTHORITY;
 
         matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS, PRODUCTS);
-        matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTSEARCH + "/*", PRODUCTSEARCH);
-        matcher.addURI(authority, NutriscopeContract.PATH_UPCSEARCH + "/*", UPCSEARCH);
+        matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS
+                + "/" + NutriscopeContract.PATH_PRODUCTSEARCH , PRODUCTSEARCH);
+        matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS
+                + "/" + NutriscopeContract.PATH_PRODUCTSEARCH  + "/*", PRODUCTSEARCH);
+        matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS
+                + "/" + NutriscopeContract.PATH_UPCSEARCH , UPCSEARCH);
+        matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS
+                + "/" + NutriscopeContract.PATH_UPCSEARCH + "/*", UPCSEARCH);
         matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS + "/UPC/*", UPC);
 
         return matcher;
     }
 
-        @Override
+    @Override
+    public void shutdown() {
+        mOpenHelper.close();
+        super.shutdown();
+    }
+
+    @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        int retVal = -1;
+
+        Log.d(LOG_CAT, "delete, uri: " + uri + ", uriMatch: " + mUriMatcher.match(uri));
+
+        switch (mUriMatcher.match(uri)) {
+            case PRODUCTS:
+            case PRODUCTSEARCH:
+            case UPCSEARCH: {
+                retVal = mOpenHelper.getWritableDatabase()
+                        .delete(NutriscopeContract.ProductsEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Not yet implemented");
+            }
+        }
+        if (retVal > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return retVal;
     }
 
     @Override
@@ -69,7 +99,8 @@ public class NutriscopeProvider extends ContentProvider {
 
         switch (mUriMatcher.match(uri)) {
             case PRODUCTS:
-            case PRODUCTSEARCH: {
+            case PRODUCTSEARCH:
+            case UPCSEARCH: {
                 long _id = mOpenHelper.getWritableDatabase()
                         .insert(NutriscopeContract.ProductsEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
@@ -92,7 +123,9 @@ public class NutriscopeProvider extends ContentProvider {
 
         Log.d(LOG_CAT, "bulkInsert Uri = " + uri + "( " + mUriMatcher.match(uri) + ")");
         switch (mUriMatcher.match(uri)) {
-            case PRODUCTS: {
+            case PRODUCTS:
+            case PRODUCTSEARCH:
+            case UPCSEARCH: {
                 db.beginTransaction();
                 int count = 0;
                 for (ContentValues value : values) {
@@ -103,7 +136,6 @@ public class NutriscopeProvider extends ContentProvider {
                 }
                 db.setTransactionSuccessful();
                 db.endTransaction();
-                getContext().getContentResolver().notifyChange(uri, null);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return count;
             }
@@ -123,12 +155,14 @@ public class NutriscopeProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Cursor cursor = null;
+        Log.d(LOG_CAT, "query URI: " + uri);
         switch (mUriMatcher.match(uri)) {
             case PRODUCTS: {
 
                 break;
             }
-            case PRODUCTSEARCH: {
+            case PRODUCTSEARCH:
+            case UPCSEARCH: {
                 cursor = mOpenHelper.getReadableDatabase().query(
                         NutriscopeContract.ProductsEntry.TABLE_NAME,
                         projection,
@@ -138,10 +172,6 @@ public class NutriscopeProvider extends ContentProvider {
                         null,
                         sortOrder);
                 mLastUri = uri;
-                break;
-            }
-            case UPCSEARCH: {
-
                 break;
             }
             case UPC: {

@@ -2,6 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.creationgroundmedia.nutriscope.MainActivity">
+    <item android:id="@+id/menu_scan"
+        android:title="@string/scan_title"
+        android:icon="@drawable/barcode_scan"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+    <item android:id="@+id/menu_search"
+        android:title="@string/search_title"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+    <item
+        android:id="@+id/action_bump"
+        android:orderInCategory="100"
+        android:title="@string/action_bump"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

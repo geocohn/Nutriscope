@@ -44,6 +44,7 @@ public class UpcSearch {
                 if (response.isSuccessful()) {
                     ApiSearchResult result = response.body();
                     Log.d(LOG_TAG, "Count: " + result.getCount());
+                    Log.d(LOG_TAG, "PageSize: " + result.getPageSize());
                     sr.result(result);
                 } else {
                     sr.result(null);

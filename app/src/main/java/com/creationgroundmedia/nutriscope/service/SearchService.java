@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.creationgroundmedia.nutriscope.api.SimpleSearch;
+import com.creationgroundmedia.nutriscope.api.UpcSearch;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 import com.creationgroundmedia.nutriscope.pojos.ApiSearchResult;
 import com.creationgroundmedia.nutriscope.pojos.Product;
@@ -31,7 +32,6 @@ public class SearchService extends IntentService {
     private static final String UPC_KEY = "com.creationgroundmedia.nutriscope.service.extra.UPC_KEY";
     private static final String LOG_TAG = SearchService.class.getSimpleName();
     private static CountDownLatch mGate;
-
     private ApiSearchResult mSearchResult;
 
 
@@ -49,23 +49,22 @@ public class SearchService extends IntentService {
         startActionProductSearch(context, productKey, 0);
     }
 
-    public static void startActionProductSearch(Context context, String productKey, int wait) {
+    public static void startActionProductSearch(Context context, String productKey, int timeout) {
         Log.d(LOG_TAG, "startActionProductSearch(context, " + productKey + ") called");
         Intent intent = new Intent(context, SearchService.class);
         intent.setAction(ACTION_PRODUCTSEARCH);
         intent.putExtra(PRODUCT_KEY, productKey);
         context.startService(intent);
-        if (wait == 0) {
+        if (timeout == 0) {
             mGate = null;
         } else {
             mGate = new CountDownLatch(1);
             try {
-                mGate.await(wait, TimeUnit.SECONDS);
+                mGate.await(timeout, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return;
     }
 
     /**
@@ -75,10 +74,24 @@ public class SearchService extends IntentService {
      * @see IntentService
      */
     public static void startActionUpcSearch(Context context, String upcKey) {
+        startActionUpcSearch(context, upcKey, 0);
+    }
+
+    public static void startActionUpcSearch(Context context, String upcKey, int timeout) {
         Intent intent = new Intent(context, SearchService.class);
         intent.setAction(ACTION_UPCSEARCH);
         intent.putExtra(UPC_KEY, upcKey);
         context.startService(intent);
+        if (timeout == 0) {
+            mGate = null;
+        } else {
+            mGate = new CountDownLatch(1);
+            try {
+                mGate.await(timeout, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -102,12 +115,58 @@ public class SearchService extends IntentService {
 
 
     private void handleProductSearch(String productKey) {
-        final CountDownLatch gate = new CountDownLatch(1);
+        int readSoFar;
+        int page;
+        int count;
+        Uri productUri = NutriscopeContract.ProductsEntry.buildProductSearchUri(productKey);
+
+        Log.d(LOG_TAG, "handleProductSearch productUri: " + productUri);
+
+        getContentResolver().delete(productUri, "1", null);
 
         SimpleSearch simpleSearch = new SimpleSearch();
+        page = 1;
+        do {
+            final CountDownLatch gate = new CountDownLatch(1);
+            readSoFar = 0;
+            count = 0;
+            mSearchResult = null;
+            simpleSearch.search(productKey, page, new SimpleSearch.SearchResult() {
+                @Override
+                public void result(ApiSearchResult r) {
+                    mSearchResult = r;
+                    gate.countDown();
+                }
+            });
+
+            try {
+                gate.await(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (mSearchResult != null) {
+                count = Integer.parseInt(mSearchResult.getCount());
+                readSoFar = Integer.parseInt(mSearchResult.getPageSize()) * page;
+                loadProvider(productUri, mSearchResult);
+                page++;
+            }
+        } while (readSoFar > 0 && readSoFar < count && mSearchResult != null);
+
+        getContentResolver().notifyChange(productUri, null);
+    }
+
+
+    private void handleUpcSearch(String upcKey) {
+        Uri upcSearchUri = NutriscopeContract.ProductsEntry.buildUpcSearchUri(upcKey);
+
+        getContentResolver().delete(upcSearchUri, "1", null);
+
+        UpcSearch upcSearch = new UpcSearch();
+        final CountDownLatch gate = new CountDownLatch(1);
 
         mSearchResult = null;
-        simpleSearch.search(productKey, new SimpleSearch.SearchResult() {
+        upcSearch.search(upcKey, new UpcSearch.SearchResult() {
             @Override
             public void result(ApiSearchResult r) {
                 mSearchResult = r;
@@ -122,16 +181,10 @@ public class SearchService extends IntentService {
         }
 
         if (mSearchResult != null) {
-            loadProvider(NutriscopeContract.ProductsEntry.buildProductSearchUri(productKey),
-                    mSearchResult);
+            loadProvider(upcSearchUri, mSearchResult);
         }
-        // TODO: 7/22/16 notify app
-    }
 
-
-    private void handleUpcSearch(String upcKey) {
-        // TODO: Handle action Baz
-        throw new UnsupportedOperationException("Not yet implemented");
+        getContentResolver().notifyChange(upcSearchUri, null);
     }
 
 
@@ -173,7 +226,6 @@ public class SearchService extends IntentService {
             ContentValues[] contentValuesArray = new ContentValues[contentValuesVector.size()];
             contentValuesVector.toArray(contentValuesArray);
 
-//            getContentResolver().delete(uri, null, null);
             getContentResolver().bulkInsert(uri, contentValuesArray);
         }
     }
