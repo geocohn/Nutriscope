@@ -4,15 +4,23 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
+import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.api.SimpleSearch;
 import com.creationgroundmedia.nutriscope.api.UpcSearch;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 import com.creationgroundmedia.nutriscope.pojos.ApiSearchResult;
 import com.creationgroundmedia.nutriscope.pojos.Product;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
@@ -24,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  */
 public class SearchService extends IntentService {
-    // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
+    // IntentService can perform, e.g. ACTION_PRODUCTSEARCH
     private static final String ACTION_PRODUCTSEARCH = "com.creationgroundmedia.nutriscope.service.action.PRODUCTSEARCH";
     private static final String ACTION_UPCSEARCH = "com.creationgroundmedia.nutriscope.service.action.UPCSEARCH";
 
@@ -34,6 +42,97 @@ public class SearchService extends IntentService {
     private static CountDownLatch mGate;
     private ApiSearchResult mSearchResult;
 
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({API_STATUS_OK,
+            API_STATUS_SERVER_DOWN,
+            API_STATUS_SERVER_INVALID,
+            API_STATUS_UNKNOWN,
+            API_STATUS_INVALID,
+            API_STATUS_NO_MATCH,
+            API_STATUS_SEARCHING})
+
+    public @interface ApiStatus {}
+
+    public static final int API_STATUS_OK = 0;
+    public static final int API_STATUS_SEARCHING = 1;
+    public static final int API_STATUS_SERVER_DOWN = 2;
+    public static final int API_STATUS_SERVER_INVALID = 3;
+    public static final int API_STATUS_UNKNOWN = 4;
+    public static final int API_STATUS_INVALID = 5;
+    public static final int API_STATUS_NO_MATCH = 6;
+
+    /**
+     * Returns true if the network is available or about to become available.
+     *
+     * @param context Context used to get the ConnectivityManager
+     * @return true if the network is available
+     */
+    static public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager)context.getSystemService(CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    /**
+     *
+     * @param context Context used to get the SharedPreferences
+     * @return the location status integer type
+     */
+    @SuppressWarnings("ResourceType")
+    static public @ApiStatus
+    int getApiStatus(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getInt(context.getString(R.string.pref_api_status_key), API_STATUS_UNKNOWN);
+    }
+
+    /**
+     * Sets the location status.
+     * @param context Context used to get the SharedPreferences
+     * @param status Specific ApiStatus to set it to
+     */
+    static public void setApiStatus(Context context, @ApiStatus int status) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putInt(context.getString(R.string.pref_api_status_key), status);
+        spe.apply();
+    }
+
+    /**
+     * Resets the location status.  (Sets it to SearchService.API_STATUS_UNKNOWN)
+     * @param context Context used to get the SharedPreferences
+     */
+    static public void resetApiStatus(Context context) {
+        setApiStatus(context, API_STATUS_UNKNOWN);
+    }
+
+    public static String getApiStatusString(Context context, @ApiStatus int apiStatus) {
+
+        if (!isNetworkAvailable(context)) {
+            return context.getString(R.string.api_status_nonetwork);
+        }
+        switch (apiStatus) {
+            case API_STATUS_INVALID: {
+                return context.getString(R.string.api_status_invalidsearch);
+            }
+            case API_STATUS_NO_MATCH: {
+                return context.getString(R.string.api_status_nomatches);
+            }
+            case API_STATUS_OK:
+            case API_STATUS_UNKNOWN:
+            case API_STATUS_SEARCHING: {
+                return "";
+            }
+            case API_STATUS_SERVER_DOWN:
+            case API_STATUS_SERVER_INVALID: {
+                return context.getString(R.string.api_status_badserver);
+            }
+        }
+        return null;
+    }
 
     public SearchService() {
         super("SearchService");
@@ -109,16 +208,22 @@ public class SearchService extends IntentService {
             }
         }
         if (mGate != null) {
+            /**
+             * The countdown latch is only used in test cases,
+             * otherwise the test finishes before anything gets to happen
+             */
             mGate.countDown();
         }
     }
 
 
     private void handleProductSearch(String productKey) {
-        int readSoFar;
+        int totalTiemsRead;
         int page;
         int count;
         Uri productUri = NutriscopeContract.ProductsEntry.buildProductSearchUri(productKey);
+        int searchTimeout = Integer.parseInt(getString(R.string.search_timeout));
+
 
         Log.d(LOG_TAG, "handleProductSearch productUri: " + productUri);
 
@@ -128,7 +233,7 @@ public class SearchService extends IntentService {
         page = 1;
         do {
             final CountDownLatch gate = new CountDownLatch(1);
-            readSoFar = 0;
+            totalTiemsRead = 0;
             count = 0;
             mSearchResult = null;
             simpleSearch.search(productKey, page, new SimpleSearch.SearchResult() {
@@ -140,18 +245,20 @@ public class SearchService extends IntentService {
             });
 
             try {
-                gate.await(10, TimeUnit.SECONDS);
+                gate.await(searchTimeout, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             if (mSearchResult != null) {
                 count = Integer.parseInt(mSearchResult.getCount());
-                readSoFar = Integer.parseInt(mSearchResult.getPageSize()) * page;
+                totalTiemsRead = Integer.parseInt(mSearchResult.getPageSize()) * page;
                 loadProvider(productUri, mSearchResult);
                 page++;
             }
-        } while (readSoFar > 0 && readSoFar < count && mSearchResult != null);
+        } while (totalTiemsRead > 0 && totalTiemsRead < count && mSearchResult != null);
+
+        setStatus(count);
 
         getContentResolver().notifyChange(productUri, null);
     }
@@ -159,6 +266,7 @@ public class SearchService extends IntentService {
 
     private void handleUpcSearch(String upcKey) {
         Uri upcSearchUri = NutriscopeContract.ProductsEntry.buildUpcSearchUri(upcKey);
+        int searchTimeout = Integer.parseInt(getString(R.string.search_timeout));
 
         getContentResolver().delete(upcSearchUri, "1", null);
 
@@ -175,7 +283,7 @@ public class SearchService extends IntentService {
         });
 
         try {
-            gate.await(10, TimeUnit.SECONDS);
+            gate.await(searchTimeout, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -184,9 +292,22 @@ public class SearchService extends IntentService {
             loadProvider(upcSearchUri, mSearchResult);
         }
 
+        setStatus(Integer.parseInt(mSearchResult.getCount()));
+
         getContentResolver().notifyChange(upcSearchUri, null);
     }
 
+    private void setStatus(int itemsRead) {
+        if (itemsRead == 0) {
+            if (mSearchResult == null) {
+                setApiStatus(getApplicationContext(), API_STATUS_SERVER_DOWN);
+            } else {
+                setApiStatus(getApplicationContext(), API_STATUS_NO_MATCH);
+            }
+        } else {
+            setApiStatus(getApplicationContext(), API_STATUS_OK);
+        }
+    }
 
     private void loadProvider(Uri uri, ApiSearchResult searchResult) {
         int count = Integer.parseInt(searchResult.getCount());

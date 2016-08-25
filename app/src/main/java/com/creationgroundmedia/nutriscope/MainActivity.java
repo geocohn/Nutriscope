@@ -1,9 +1,10 @@
 package com.creationgroundmedia.nutriscope;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,10 +22,19 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
+import com.creationgroundmedia.nutriscope.scan.BarcodeCaptureActivity;
+import com.creationgroundmedia.nutriscope.scan.camera.CameraSource;
 import com.creationgroundmedia.nutriscope.service.SearchService;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity
         extends AppCompatActivity
@@ -43,11 +53,20 @@ public class MainActivity
     private static final int NAME = 2;
     private static final int PRODUCTID = 3;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final int RC_BARCODE_CAPTURE = 9001;
 
 
     private Context mContext;
+    private ProgressBar mMainProgressBar;
+    private TextView mApiStatusView;
     private RecyclerView mRecyclerView;
+    private SearchView mSearchView;
     private Loader<Cursor> mCursorLoader;
+    private String mBarcodeStatus;
+    private String mBarcodeValue;
+    private MenuItem mSearchMenu;
+    private Uri mSearchUri = NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +87,15 @@ public class MainActivity
             }
         });
 
+        SearchService.resetApiStatus(mContext);
+
         mCursorLoader = getSupportLoaderManager().initLoader(URL_LOADER, null, this);
 
+        mMainProgressBar = (ProgressBar) findViewById(R.id.mainProgressBar);
+        mApiStatusView = (TextView) findViewById(R.id.api_status);
         mRecyclerView = (RecyclerView) findViewById(R.id.product_list);
         assert mRecyclerView != null;
-        setupRecyclerView((RecyclerView) mRecyclerView);
+        setupRecyclerView(mRecyclerView);
 
     }
 
@@ -81,18 +104,27 @@ public class MainActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSearchMenu = menu.findItem(R.id.menu_search);
+        mSearchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        mSearchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d(LOG_TAG, "onQueryTextSubmit(" + query + ")");
-                SearchService.startActionProductSearch(mContext, query);
+                SearchService.setApiStatus(mContext, SearchService.API_STATUS_SEARCHING);
+                updateScreenStatus();
+                if (looksLikeUpc(query)) {
+                    setupQueryUri(NutriscopeContract.ProductsEntry.UPCSEARCH_URI);
+                    SearchService.startActionUpcSearch(mContext, query);
+                } else {
+                    setupQueryUri(NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI);
+                    SearchService.startActionProductSearch(mContext, query);
+                }
                 /**
                  * calling clearFocus() not only dismisses the keyboard,
                  * if prevents onQueryTextSubmit() from being called twice for a single query
                  */
-                searchView.clearFocus();
+                mSearchView.clearFocus();
                 return true;
             }
 
@@ -102,7 +134,32 @@ public class MainActivity
             }
         });
 
+        menu.findItem(R.id.menu_scan)
+                .setVisible(
+                        CameraSource.getIdForRequestedCamera(CameraSource.CAMERA_FACING_BACK)
+                                != -1);
+
         return true;
+    }
+
+    private void setupQueryUri(Uri uri) {
+        if (mSearchUri != uri) {
+            mSearchUri = uri;
+            getSupportLoaderManager().restartLoader(URL_LOADER, null, this);
+        }
+    }
+
+    private boolean looksLikeUpc(String query) {
+        if (query.length() < 4 || query.length() > 15) {
+            return false;
+        } else {
+            for (char c : query.toCharArray()) {
+                if (c != 'x' && c != 'X' && (c < '0' || c > '9')) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     @Override
@@ -115,15 +172,70 @@ public class MainActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_bump) {
-            getSupportLoaderManager().restartLoader(URL_LOADER, null, MainActivity.this);
-            Log.d(LOG_TAG, "bump");
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void onScanClicked(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.menu_scan) {
+            // launch barcode activity.
+
+            Intent intent = new Intent(this, BarcodeCaptureActivity.class);
+            intent.putExtra(BarcodeCaptureActivity.AutoFocus, /*autoFocus.isChecked()*/ true);
+            intent.putExtra(BarcodeCaptureActivity.UseFlash, /*useFlash.isChecked()*/ true);
+
+            startActivityForResult(intent, RC_BARCODE_CAPTURE);
+        }
+    }
+
+    /**
+     * Called when an activity you launched exits, giving you the requestCode
+     * you started it with, the resultCode it returned, and any additional
+     * data from it.  The <var>resultCode</var> will be
+     * {@link #RESULT_CANCELED} if the activity explicitly returned that,
+     * didn't return any result, or crashed during its operation.
+     * <p/>
+     * <p>You will receive this call immediately before onResume() when your
+     * activity is re-starting.
+     * <p/>
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode  The integer result code returned by the child activity
+     *                    through its setResult().
+     * @param data        An Intent, which can return result data to the caller
+     *                    (various data can be attached to Intent "extras").
+     * @see #startActivityForResult
+     * @see #createPendingResult
+     * @see #setResult(int)
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RC_BARCODE_CAPTURE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    mBarcodeStatus = getString(R.string.barcode_success);
+                    mBarcodeValue = barcode.displayValue;
+                    mSearchMenu.expandActionView();
+                    mSearchView.setIconified(false);
+                    mSearchView.setQuery(mBarcodeValue, false);
+                    Log.d(LOG_TAG, "Barcode read: " + barcode.displayValue);
+                } else {
+                    mBarcodeStatus = getString(R.string.barcode_failure);
+                    Log.d(LOG_TAG, "No barcode captured, intent data is null");
+                }
+            } else {
+                mBarcodeStatus = String.format(getString(R.string.barcode_error),
+                        CommonStatusCodes.getStatusCodeString(resultCode));
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new AutofitGridLayoutManager(this, 1000));
         recyclerView.setHasFixedSize(true);
@@ -136,7 +248,7 @@ public class MainActivity
             case URL_LOADER:
                 return new CursorLoader(
                         this,                                   // context
-                        NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI,  // Table to query
+                        mSearchUri,  // Table to query
                         PROJECTION,                             // Projection to return
                         null,
                         null,                                   // No selection arguments
@@ -150,6 +262,7 @@ public class MainActivity
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        updateScreenStatus();
         SimpleProductCursorRecyclerViewAdapter adapter =
                 (SimpleProductCursorRecyclerViewAdapter) mRecyclerView.getAdapter();
         adapter.changeCursor(data);
@@ -164,16 +277,16 @@ public class MainActivity
         /**
          * the number of columns in the grid depends on how much width we've got to play with
          */
-        private int itemWidth;
+        private int mItemWidth;
 
-        public AutofitGridLayoutManager(Context context, int itemWidth) {
+        AutofitGridLayoutManager(Context context, int itemWidth) {
             super (context, 1);
-            this.itemWidth = itemWidth;
+            mItemWidth = itemWidth;
         }
 
         @Override
         public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-            int spanCount = getWidth() / itemWidth;
+            int spanCount = getWidth() / mItemWidth;
             if (spanCount < 1) {
                 spanCount = 1;
             }
@@ -189,7 +302,7 @@ public class MainActivity
         private Context mContext;
         private ViewHolder mSelectedHolder = null;
 
-        public SimpleProductCursorRecyclerViewAdapter(Context context, Cursor productCursor) {
+        SimpleProductCursorRecyclerViewAdapter(Context context, Cursor productCursor) {
             super(context, productCursor);
             mContext = context;
         }
@@ -211,20 +324,49 @@ public class MainActivity
             viewHolder.mProductId.setText(cursor.getString(PRODUCTID));
             viewHolder.mName.setText(cursor.getString(NAME));
             String thumb = cursor.getString(THUMB);
+            viewHolder.posterProgressView.setVisibility(View.VISIBLE);
+            Picasso.with(mContext)
+                    .load(thumb)
+                    .into(viewHolder.posterImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            viewHolder.posterProgressView.setVisibility(View.GONE);
+                        }
+                        @Override
+                        public void onError() {
+                            viewHolder.posterImageView.setImageResource(R.mipmap.ic_poster_placeholder);
+                            viewHolder.posterProgressView.setVisibility(View.GONE);
+                        }
+                    });
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder {
             View mView;
             TextView mName;
             TextView mProductId;
+            ImageView posterImageView;
+            ProgressBar posterProgressView;
 
-            public ViewHolder(View view) {
+            ViewHolder(View view) {
                 super(view);
                 mView = view;
+
+                posterImageView = (ImageView) view.findViewById(R.id.posterView);
+                posterImageView.setLayoutParams(new FrameLayout.LayoutParams(200, 200));
+                posterImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                posterImageView.setAdjustViewBounds(true);
+                posterImageView.setPadding(4, 4, 4, 4);
+                posterProgressView = (ProgressBar) view.findViewById(R.id.posterProgressBar);
 
                 mName = (TextView) view.findViewById(R.id.name);
                 mProductId = (TextView) view.findViewById(R.id.product_id);
             }
         }
+    }
+
+    private void updateScreenStatus() {
+        @SearchService.ApiStatus int apiStatus = SearchService.getApiStatus(mContext);
+        mMainProgressBar.setVisibility(apiStatus == SearchService.API_STATUS_SEARCHING? View.VISIBLE : View.INVISIBLE);
+        mApiStatusView.setText(SearchService.getApiStatusString(mContext, apiStatus));
     }
 }
