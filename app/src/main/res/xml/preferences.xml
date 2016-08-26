@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="@string/pref_autofocus"
+        android:title="@string/pref_autofocus"
+        android:summary="@string/pref_autofocus_summary"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="@string/pref_useflash"
+        android:title="@string/pref_useflash"
+        android:summary="@string/pref_useflash_summary"
+        android:defaultValue="true" />
+</PreferenceScreen>

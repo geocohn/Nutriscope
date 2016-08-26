@@ -24,4 +24,8 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="pref_autofocus">Autofocus</string>
+    <string name="pref_autofocus_summary">Autofocus the camera when scanning UPC barcodes</string>
+    <string name="pref_useflash">Flash</string>
+    <string name="pref_useflash_summary">Use the camera flash when scanning UPC barcodes</string>
 </resources>

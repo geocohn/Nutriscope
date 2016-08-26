@@ -32,7 +32,10 @@
         </activity>
 
         <activity android:name=".scan.BarcodeCaptureActivity"
-            android:label="Read Barcode"/>
+            android:label="Read Barcode" />
+
+        <activity android:name=".SettingsActivity"
+            android:label="Settings" />
 
         <provider
             android:name=".data.NutriscopeProvider"

@@ -2,9 +2,11 @@ package com.creationgroundmedia.nutriscope;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -171,7 +173,7 @@ public class MainActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -182,11 +184,21 @@ public class MainActivity
             // launch barcode activity.
 
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
-            intent.putExtra(BarcodeCaptureActivity.AutoFocus, /*autoFocus.isChecked()*/ true);
-            intent.putExtra(BarcodeCaptureActivity.UseFlash, /*useFlash.isChecked()*/ true);
+            intent.putExtra(BarcodeCaptureActivity.AutoFocus, getAutoFocus());
+            intent.putExtra(BarcodeCaptureActivity.UseFlash, getUseFlash());
 
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
         }
+    }
+
+    private boolean getUseFlash() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sp.getBoolean(mContext.getString(R.string.pref_useflash), true);
+    }
+
+    private boolean getAutoFocus() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return sp.getBoolean(mContext.getString(R.string.pref_autofocus), true);
     }
 
     /**
