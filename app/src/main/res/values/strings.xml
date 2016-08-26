@@ -28,4 +28,6 @@
     <string name="pref_autofocus_summary">Autofocus the camera when scanning UPC barcodes</string>
     <string name="pref_useflash">Flash</string>
     <string name="pref_useflash_summary">Use the camera flash when scanning UPC barcodes</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

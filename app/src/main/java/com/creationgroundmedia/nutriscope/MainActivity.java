@@ -350,6 +350,20 @@ public class MainActivity
                             viewHolder.posterProgressView.setVisibility(View.GONE);
                         }
                     });
+
+            final long id = cursor.getLong(ID);
+
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(LOG_TAG, "Clicked item " + id);
+                    Intent detailIntent = new Intent(view.getContext(), DetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong(NutriscopeContract.ProductsEntry._ID, id);
+                    detailIntent.putExtras(bundle);
+                    startActivity(detailIntent);
+                }
+            });
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
