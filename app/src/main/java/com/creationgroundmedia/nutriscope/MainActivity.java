@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
+import com.creationgroundmedia.nutriscope.detail.DetailActivity;
 import com.creationgroundmedia.nutriscope.scan.BarcodeCaptureActivity;
 import com.creationgroundmedia.nutriscope.scan.camera.CameraSource;
 import com.creationgroundmedia.nutriscope.service.SearchService;
@@ -333,9 +334,11 @@ public class MainActivity
 
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor) {
-            viewHolder.mProductId.setText(cursor.getString(PRODUCTID));
-            viewHolder.mName.setText(cursor.getString(NAME));
+            final String productUpc = cursor.getString(PRODUCTID);
+            final String productName = cursor.getString(NAME);
             String thumb = cursor.getString(THUMB);
+            viewHolder.mProductId.setText(productUpc);
+            viewHolder.mName.setText(productName);
             viewHolder.posterProgressView.setVisibility(View.VISIBLE);
             Picasso.with(mContext)
                     .load(thumb)
@@ -351,17 +354,14 @@ public class MainActivity
                         }
                     });
 
-            final long id = cursor.getLong(ID);
+            final long rowId = cursor.getLong(ID);
 
             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(LOG_TAG, "Clicked item " + id);
-                    Intent detailIntent = new Intent(view.getContext(), DetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putLong(NutriscopeContract.ProductsEntry._ID, id);
-                    detailIntent.putExtras(bundle);
-                    startActivity(detailIntent);
+                    Log.d(LOG_TAG, "Clicked item " + rowId);
+                    DetailActivity.launchInstance(
+                            view.getContext(), rowId, productName, productUpc);
                 }
             });
         }

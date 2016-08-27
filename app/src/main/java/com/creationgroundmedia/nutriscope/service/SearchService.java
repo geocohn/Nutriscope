@@ -319,9 +319,9 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID, product.getId());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ADDITIVES, product.getAdditives());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ALLERGENS, product.getAllergens());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS, product.getBrands());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES, product.getCategories());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY, String.valueOf(product.getCitiesTags()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS, spacesAfterCommas(product.getBrands()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES, spacesAfterCommas(product.getCategories()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY, String.valueOf(product.getOrigins()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ENERGY, product.getNutriments().getEnergy100g());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATS, product.getNutriments().getEnergy100g());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGE, product.getImageFrontUrl());
@@ -330,13 +330,13 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS, String.valueOf(product.getIngredients()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTSIMAGE, product.getImageIngredientsUrl());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATS, product.getNutriments().getFat100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_LABELS, product.getLabels());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_LABELS, spacesAfterCommas(product.getLabels()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_NAME, product.getProductName());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING, product.getPackaging());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING, spacesAfterCommas(product.getPackaging()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_QUANTITY, product.getQuantity());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALT, product.getNutriments().getSalt100g());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATS, product.getNutriments().getSaturatedFat100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES, product.getStores());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES, spacesAfterCommas(product.getStores()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARS, product.getNutriments().getSugars100g());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_TRACES, product.getTraces());
 
@@ -349,5 +349,12 @@ public class SearchService extends IntentService {
 
             getContentResolver().bulkInsert(uri, contentValuesArray);
         }
+    }
+
+    private String spacesAfterCommas(String str) {
+        if (str != null) {
+            str = str.replace(",", ", ");
+        }
+        return str;
     }
 }

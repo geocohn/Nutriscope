@@ -8,19 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
-import com.creationgroundmedia.nutriscope.api.SimpleSearch;
-import com.creationgroundmedia.nutriscope.pojos.ApiSearchResult;
-
 public class NutriscopeProvider extends ContentProvider {
     private static final UriMatcher mUriMatcher = buildUriMatcher();
     private static final String LOG_CAT = NutriscopeProvider.class.getSimpleName();
+    private static final String SELECTION_BY_ID_STRING = NutriscopeContract.ProductsEntry._ID + " = ?";
     private NutriscopeDbHelper mOpenHelper;
 
     static final int PRODUCTS = 100;
     static final int PRODUCTSEARCH = 101;
     static final int UPCSEARCH = 102;
-    static final int UPC = 103;
-    private Uri mLastUri = null;
+    static final int ROWID = 103;
+    static final int UPC = 104;
 
     public NutriscopeProvider() {
     }
@@ -39,6 +37,8 @@ public class NutriscopeProvider extends ContentProvider {
                 + "/" + NutriscopeContract.PATH_UPCSEARCH , UPCSEARCH);
         matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS
                 + "/" + NutriscopeContract.PATH_UPCSEARCH + "/*", UPCSEARCH);
+        matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS
+                + "/" + NutriscopeContract.PATH_ROWID + "/#", ROWID);
         matcher.addURI(authority, NutriscopeContract.PATH_PRODUCTS + "/UPC/*", UPC);
 
         return matcher;
@@ -104,7 +104,7 @@ public class NutriscopeProvider extends ContentProvider {
                 long _id = mOpenHelper.getWritableDatabase()
                         .insert(NutriscopeContract.ProductsEntry.TABLE_NAME, null, values);
                 if ( _id > 0 )
-                    returnUri = NutriscopeContract.ProductsEntry.buildProductUri(_id);
+                    returnUri = NutriscopeContract.ProductsEntry.buildProductRowIdUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
@@ -157,8 +157,17 @@ public class NutriscopeProvider extends ContentProvider {
         Cursor cursor = null;
         Log.d(LOG_CAT, "query URI: " + uri);
         switch (mUriMatcher.match(uri)) {
-            case PRODUCTS: {
-
+            case ROWID: {
+                long index = NutriscopeContract.ProductsEntry.getProductRowIdFromUri(uri);
+                String[] selectionParam = {String.valueOf(index)};
+                cursor = mOpenHelper.getReadableDatabase().query(
+                        NutriscopeContract.ProductsEntry.TABLE_NAME,
+                        projection,
+                        SELECTION_BY_ID_STRING,
+                        selectionParam,
+                        null,
+                        null,
+                        sortOrder);
                 break;
             }
             case PRODUCTSEARCH:
@@ -171,7 +180,6 @@ public class NutriscopeProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
-                mLastUri = uri;
                 break;
             }
             case UPC: {

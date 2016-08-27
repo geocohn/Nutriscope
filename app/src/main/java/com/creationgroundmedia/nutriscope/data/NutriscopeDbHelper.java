@@ -40,7 +40,7 @@ public class NutriscopeDbHelper extends SQLiteOpenHelper {
                 ProductsEntry.COLUMN_LABELS + " TEXT, " +
                 ProductsEntry.COLUMN_NAME + " TEXT, " +
                 ProductsEntry.COLUMN_PACKAGING + " TEXT, " +
-                ProductsEntry.COLUMN_PRODUCTID + " TEXT UNIQUE, " +
+                ProductsEntry.COLUMN_PRODUCTID + " TEXT, " +
                 ProductsEntry.COLUMN_QUANTITY + " TEXT, " +
                 ProductsEntry.COLUMN_SALT + " TEXT, " +
                 ProductsEntry.COLUMN_SATURATEDFATS + " TEXT, " +

@@ -1,8 +1,11 @@
-package com.creationgroundmedia.nutriscope;
+package com.creationgroundmedia.nutriscope.detail;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 
 public class DetailActivity extends AppCompatActivity {
@@ -31,13 +36,27 @@ public class DetailActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
+    private static final String LOG_TAG = DetailActivity.class.getSimpleName();
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private long mProductEntryId;
+    private long mRowId;
+    private String mProductName;
+    private String mProductUpc;
+
+    public static void launchInstance(Context context, long rowId, String name, String upc) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putLong(NutriscopeContract.ProductsEntry._ID, rowId);
+        bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_NAME, name);
+        bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID, upc);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +65,19 @@ public class DetailActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
-        mProductEntryId = getIntent().getExtras().getLong(NutriscopeContract.ProductsEntry._ID);
+        Bundle extras = getIntent().getExtras();
+        mRowId = extras.getLong(NutriscopeContract.ProductsEntry._ID);
+        mProductName = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_NAME);
+        mProductUpc = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID);
+
+        Log.d(LOG_TAG, "onCreate(" + mRowId + ", " + mProductName + ", " + mProductUpc + ")");
+        actionBar.setTitle(mProductName);
+        actionBar.setSubtitle(mProductUpc);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -144,7 +171,15 @@ public class DetailActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0: {
+                    return DetailDescriptionFragment.newInstance(
+                            mRowId, mProductName, mProductUpc);
+                }
+                default: {
+                    return PlaceholderFragment.newInstance(position + 1);
+                }
+            }
         }
 
         @Override
@@ -157,11 +192,11 @@ public class DetailActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "PRODUCT " + mProductEntryId + ", SECTION 1";
+                    return "DESCRIPTION";
                 case 1:
-                    return "PRODUCT " + mProductEntryId + ", SECTION 2";
+                    return "INGREDIENTS";
                 case 2:
-                    return "PRODUCT " + mProductEntryId + ", SECTION 3";
+                    return "NUTRITION";
             }
             return null;
         }

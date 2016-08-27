@@ -20,6 +20,7 @@ public class NutriscopeContract {
     public static final String PATH_PRODUCTSEARCH = "productsearch";
     public static final String PATH_UPCSEARCH = "upcsearch";
     public static final String PATH_UPC = "upc";
+    public static final String PATH_ROWID = "rowid";
 
     /* Inner class that defines the table contents of the products table */
     public static final class ProductsEntry implements BaseColumns {
@@ -32,6 +33,8 @@ public class NutriscopeContract {
                 CONTENT_URI.buildUpon().appendPath(PATH_UPCSEARCH).build();
         public static final Uri UPC_URI =
                 CONTENT_URI.buildUpon().appendPath(PATH_UPC).build();
+        public static final Uri ROWID_URI =
+                CONTENT_URI.buildUpon().appendPath(PATH_ROWID).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
@@ -62,8 +65,8 @@ public class NutriscopeContract {
         public static final String COLUMN_SALT = "salt";
         public static final String COLUMN_ENERGY = "energy";
 
-        public static Uri buildProductUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
+        public static Uri buildProductRowIdUri(long id) {
+            return ContentUris.withAppendedId(ROWID_URI, id);
         }
 
         public static Uri buildProductSearchUri(String key) {
@@ -84,8 +87,8 @@ public class NutriscopeContract {
                     .build();
         }
 
-        public static long getProductFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(1));
+        public static long getProductRowIdFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(2));
         }
 
         public static String getProductSearchStringFromUri(Uri uri) {

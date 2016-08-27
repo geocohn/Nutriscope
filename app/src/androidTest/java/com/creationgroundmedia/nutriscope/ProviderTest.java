@@ -14,10 +14,6 @@ import com.creationgroundmedia.nutriscope.service.SearchService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
-import static com.creationgroundmedia.nutriscope.data.NutriscopeContract.ProductsEntry.CONTENT_URI;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
@@ -43,8 +39,8 @@ public class ProviderTest {
         long productId = 7622300623456L;
         Uri uri;
 
-        uri = NutriscopeContract.ProductsEntry.buildProductUri(productId);
-        assertEquals(NutriscopeContract.ProductsEntry.getProductFromUri(uri), productId);
+        uri = NutriscopeContract.ProductsEntry.buildProductRowIdUri(productId);
+        assertEquals(NutriscopeContract.ProductsEntry.getProductRowIdFromUri(uri), productId);
 
         uri = NutriscopeContract.ProductsEntry.buildProductSearchUri(productSearchKey);
         assertEquals(NutriscopeContract.ProductsEntry.getProductSearchStringFromUri(uri), productSearchKey);
