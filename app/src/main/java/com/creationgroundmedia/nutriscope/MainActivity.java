@@ -265,7 +265,7 @@ public class MainActivity
                         PROJECTION,                             // Projection to return
                         null,
                         null,                                   // No selection arguments
-                        null                                    // Default sort order
+                        NutriscopeContract.ProductsEntry.COLUMN_NAME + " COLLATE NOCASE ASC"
                 );
             default:
                 // An invalid id was passed in
