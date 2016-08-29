@@ -11,42 +11,43 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DetailDescriptionFragment#newInstance} factory method to
+ * Use the {@link DetailIngredientsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetailDescriptionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DetailIngredientsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     // the fragment initialization parameters, e.g. ARG_ROWID
     private static final String ARG_ROWID = NutriscopeContract.ProductsEntry._ID;
     private static final String ARG_NAME = NutriscopeContract.ProductsEntry.COLUMN_NAME;
     private static final String ARG_UPC = NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID;
-    private static final int URL_LOADER = 1;
+    private static final int URL_LOADER = 2;
     private static final String[] PROJECTION = new String[]{
             NutriscopeContract.ProductsEntry._ID,
-            NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES,
-            NutriscopeContract.ProductsEntry.COLUMN_LABELS,
-            NutriscopeContract.ProductsEntry.COLUMN_BRANDS,
-            NutriscopeContract.ProductsEntry.COLUMN_STORES,
-            NutriscopeContract.ProductsEntry.COLUMN_CITY,
-            NutriscopeContract.ProductsEntry.COLUMN_QUANTITY,
-            NutriscopeContract.ProductsEntry.COLUMN_PACKAGING
+            NutriscopeContract.ProductsEntry.COLUMN_ADDITIVES,
+            NutriscopeContract.ProductsEntry.COLUMN_ALLERGENS,
+            NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS,
+            NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTSIMAGE,
+            NutriscopeContract.ProductsEntry.COLUMN_TRACES
     };
     // The following must agree with the PROJECTION above
     private static final int ID = 0;
-    private static final int CATEGORIES = 1;
-    private static final int LABELS = 2;
-    private static final int BRANDS = 3;
-    private static final int STORES = 4;
-    private static final int CITY = 5;
-    private static final int QUANTITY = 6;
-    private static final int PACKAGING = 7;
-    private static final String LOG_TAG = DetailDescriptionFragment.class.getSimpleName();
+    private static final int ADDITIVES = 1;
+    private static final int ALLERGENS = 2;
+    private static final int INGREDIENTS = 3;
+    private static final int INGREDIENTSIMAGE = 4;
+    private static final int TRACES = 5;
+
+    private static final String LOG_TAG = DetailIngredientsFragment.class.getSimpleName();
 
     private long mRowId;
 
@@ -56,7 +57,7 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
     private View mView;
     private Loader<Cursor> mCursorLoader;
 
-    public DetailDescriptionFragment() {
+    public DetailIngredientsFragment() {
         // Required empty public constructor
     }
 
@@ -67,12 +68,12 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
      * @param rowId The Id of the content provider entry
      * @param name The product name
      * @param upc The product UPC
-     * @return A new instance of fragment DetailDescriptionFragment.
+     * @return A new instance of fragment DetailIngredientsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetailDescriptionFragment newInstance(
+    public static DetailIngredientsFragment newInstance(
             long rowId, String name, String upc) {
-        DetailDescriptionFragment fragment = new DetailDescriptionFragment();
+        DetailIngredientsFragment fragment = new DetailIngredientsFragment();
         Bundle args = new Bundle();
         args.putLong(ARG_ROWID, rowId);
         args.putString(ARG_NAME, name);
@@ -96,7 +97,7 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_detail_description, container, false);
+        mView = inflater.inflate(R.layout.fragment_detail_ingredients, container, false);
 
         return mView;
     }
@@ -138,21 +139,35 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
             return;
         }
         data.moveToFirst();
-        TextView categoriesView = (TextView) mView.findViewById(R.id.ingredients);
-        TextView labelsView = (TextView) mView.findViewById(R.id.possibleAllergens);
-        TextView brandsView = (TextView) mView.findViewById(R.id.brands);
-        TextView storesView = (TextView) mView.findViewById(R.id.stores);
-        TextView cityView = (TextView) mView.findViewById(R.id.traces);
-        TextView quantityView = (TextView) mView.findViewById(R.id.quantity);
-        TextView packagingView = (TextView) mView.findViewById(R.id.packaging);
+        final ImageView labelPhoto = (ImageView) mView.findViewById(R.id.labelPhoto);
+        TextView ingredientsView = (TextView) mView.findViewById(R.id.ingredients);
+        TextView allergensView = (TextView) mView.findViewById(R.id.possibleAllergens);
+        TextView tracesView = (TextView) mView.findViewById(R.id.traces);
+        TextView additivesView = (TextView) mView.findViewById(R.id.additives);
+        final ProgressBar labelPhotoProgressBar = (ProgressBar) mView.findViewById(R.id.labelPhotoProgressBar);
 
-        categoriesView.setText(data.getString(CATEGORIES));
-        labelsView.setText(data.getString(LABELS));
-        brandsView.setText(data.getString(BRANDS));
-        storesView.setText(data.getString(STORES));
-        cityView.setText(data.getString(CITY));
-        quantityView.setText(data.getString(QUANTITY));
-        packagingView.setText(data.getString(PACKAGING));
+        labelPhoto.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        labelPhoto.setAdjustViewBounds(true);
+        labelPhoto.setPadding(4, 4, 4, 4);
+        labelPhotoProgressBar.setVisibility(View.VISIBLE);
+        Picasso.with(mContext)
+                .load(data.getString(INGREDIENTSIMAGE))
+                .into(labelPhoto, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        labelPhotoProgressBar.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onError() {
+                        labelPhoto.setImageResource(R.mipmap.ic_poster_placeholder);
+                        labelPhotoProgressBar.setVisibility(View.GONE);
+                    }
+                });
+
+        ingredientsView.setText(data.getString(INGREDIENTS));
+        allergensView.setText(data.getString(ALLERGENS));
+        additivesView.setText(data.getString(ADDITIVES));
+        tracesView.setText(data.getString(TRACES));
     }
 
     @Override

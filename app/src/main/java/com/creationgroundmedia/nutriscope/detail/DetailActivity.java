@@ -176,6 +176,10 @@ public class DetailActivity extends AppCompatActivity {
                     return DetailDescriptionFragment.newInstance(
                             mRowId, mProductName, mProductUpc);
                 }
+                case 1: {
+                    return DetailIngredientsFragment.newInstance(
+                            mRowId, mProductName, mProductUpc);
+                }
                 default: {
                     return PlaceholderFragment.newInstance(position + 1);
                 }

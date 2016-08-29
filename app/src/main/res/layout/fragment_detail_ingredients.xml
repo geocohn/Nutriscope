@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.creationgroundmedia.nutriscope.detail.DetailIngredientsFragment">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_margin"
+        tools:context="com.creationgroundmedia.nutriscope.detail.DetailIngredientsFragment">
+
+        <ImageView
+            android:id="@+id/labelPhoto"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:srcCompat="@drawable/cast_album_art_placeholder"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/additives"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/IngredientssLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="Ingredients"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteY="6dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:id="@+id/ingredients"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Ingredients Soluta assueverit has id. Vel tempor vivendo recteque ea. Mei ad agam perpetua laboramus. Mea ex dicam prompta tractatos, ut dicta soleat labitur usu. Vix ei iusto tation, modus regione elaboraret pro in, ei duo dicta libris. Cum et maluisset eloquentiam."
+            app:layout_constraintTop_toBottomOf="@+id/IngredientssLabel"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/possibleAllergensLabel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ems="10"
+            android:text="Possible allergens"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/possibleAllergens"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/possibleAllergensLabel"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp"
+            android:text="Possible Allergens Lorem ipsum dolor sit amet, duo ut quidam voluptatibus, pri te duis docendi. Ferri intellegam vim ad, reque ridens expetendis cum ad. Sea fuisset nostrum disputationi ut, copiosae gloriatur ut eos. Has at debitis nonumes. Ubique nostrud conceptam usu ut, no ius rebum aeque assueverit, in mei quot error saepe." />
+
+        <TextView
+            android:id="@+id/tracesLabel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Traces"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/possibleAllergens"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/traces"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Traces audire constituam vel ad"
+            app:layout_constraintTop_toBottomOf="@+id/tracesLabel"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/additivesLabel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Additives:"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/traces"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/additives"
+            android:layout_width="344dp"
+            android:layout_height="24dp"
+            android:text="Additives his abhorreant vituperata"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/additivesLabel"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp" />
+
+        <ProgressBar
+            android:id="@+id/labelPhotoProgressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/labelPhoto"
+            app:layout_constraintRight_toRightOf="@+id/labelPhoto"
+            app:layout_constraintTop_toTopOf="@+id/labelPhoto"
+            app:layout_constraintBottom_toBottomOf="@+id/labelPhoto" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

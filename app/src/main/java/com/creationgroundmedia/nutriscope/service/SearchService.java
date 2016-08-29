@@ -17,10 +17,14 @@ import com.creationgroundmedia.nutriscope.api.SimpleSearch;
 import com.creationgroundmedia.nutriscope.api.UpcSearch;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 import com.creationgroundmedia.nutriscope.pojos.ApiSearchResult;
+import com.creationgroundmedia.nutriscope.pojos.Ingredients;
 import com.creationgroundmedia.nutriscope.pojos.Product;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
@@ -327,7 +331,7 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGE, product.getImageFrontUrl());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGESMALL, product.getImageFrontSmallUrl());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGETHUMB, product.getImageFrontThumbUrl());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS, String.valueOf(product.getIngredients()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS, commaSeparateIngredients(product.getIngredients()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTSIMAGE, product.getImageIngredientsUrl());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATS, product.getNutriments().getFat100g());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_LABELS, spacesAfterCommas(product.getLabels()));
@@ -351,10 +355,39 @@ public class SearchService extends IntentService {
         }
     }
 
+    private String commaSeparateIngredients(List<Ingredients> ingredients) {
+        String ingredientString = null;
+
+        /**
+         * Sort by rank
+         */
+        if (ingredients != null) {
+            Collections.sort(ingredients, new Comparator<Ingredients>() {
+                @Override
+                public int compare(Ingredients t1, Ingredients t2) {
+                    return t1.getRank() - t2.getRank();
+                }
+            });
+        }
+        /**
+         * Build a comma separated string
+         */
+        for (Ingredients ingredient : ingredients) {
+            if (ingredient != null) {
+                if (ingredientString == null) {
+                    ingredientString = ingredient.getText();
+                } else {
+                    ingredientString += ", " + ingredient.getText();
+                }
+            }
+        }
+        return ingredientString;
+    }
+
     private String spacesAfterCommas(String str) {
         if (str != null) {
-            str = str.replace(",", ", ");
+            return(str.replace(",", ", "));
         }
-        return str;
+        return null;
     }
 }
