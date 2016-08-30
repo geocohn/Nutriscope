@@ -28,6 +28,7 @@ public class NutriscopeDbHelper extends SQLiteOpenHelper {
                 ProductsEntry.COLUMN_ADDITIVES + " TEXT, " +
                 ProductsEntry.COLUMN_ALLERGENS + " TEXT, " +
                 ProductsEntry.COLUMN_BRANDS + " TEXT, " +
+                ProductsEntry.COLUMN_CARBOHYDRATES + " TEXT, " +
                 ProductsEntry.COLUMN_CATEGORIES + " TEXT, " +
                 ProductsEntry.COLUMN_CITY + " TEXT, " +
                 ProductsEntry.COLUMN_ENERGY + " TEXT, " +

@@ -329,6 +329,9 @@ public class SearchService extends IntentService {
                     product.getAllergens());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS,
                     spacesAfterCommas(product.getBrands()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CARBOHYDRATES,
+                    (String) concat(product.getNutriments().getCarbohydrates100g(),
+                            product.getNutriments().getCarbohydratesUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES,
                     spacesAfterCommas(product.getCategories()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY,

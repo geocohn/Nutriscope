@@ -59,6 +59,7 @@ public class NutriscopeContract {
         public static final String COLUMN_ALLERGENS = "allergens";
         public static final String COLUMN_TRACES = "traces";
         public static final String COLUMN_ADDITIVES = "additives";
+        public static final String COLUMN_CARBOHYDRATES = "carbohydrates";
         public static final String COLUMN_FAT = "fats";
         public static final String COLUMN_FATLEVEL = "fatlevel";
         public static final String COLUMN_FIBER = "fiber";
