@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.creationgroundmedia.nutriscope.detail.DetailIngredientsFragment">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_margin"
+        tools:context="com.creationgroundmedia.nutriscope.detail.DetailIngredientsFragment">
+
+        <TextView
+            android:id="@+id/NutritionLevelsLabel"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="Nutrition levels for 100g"
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_circle_24dp"
+            android:id="@+id/fatIndicator"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="30dp" />
+
+        <TextView
+            android:text="11.7g Fat in moderate quantity"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fatQuantity"
+            tools:layout_editor_absoluteY="34dp"
+            tools:layout_editor_absoluteX="44dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_circle_24dp"
+            android:id="@+id/satFatIndicator"
+            tools:layout_editor_absoluteY="54dp"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:text="4.1g Saturated fat in moderate quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/satFatQuantity"
+            tools:layout_editor_absoluteY="59dp"
+            tools:layout_editor_absoluteX="44dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_circle_24dp"
+            android:id="@+id/sugarsIndicator"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="78dp" />
+
+        <TextView
+            android:text="2g Sugars in low quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="82dp"
+            tools:layout_editor_absoluteX="44dp"
+            android:id="@+id/sugarsQuantity" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_circle_24dp"
+            tools:layout_editor_absoluteY="102dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:id="@+id/saltIndicator" />
+
+        <TextView
+            android:text="0.787g Salt in moderate quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="106dp"
+            tools:layout_editor_absoluteX="44dp"
+            android:id="@+id/saltQuantity" />
+
+        <TextView
+            android:text="Energy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="139dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:id="@+id/EnergyLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="715 kj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="143dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/energyJoules" />
+
+        <TextView
+            android:text="(171 kcal)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="160dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/energyCalories" />
+
+        <TextView
+            android:text="Fat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="185dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:id="@+id/fatLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="11.7g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="190dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/totalFat" />
+
+        <TextView
+            android:text="– Saturated fat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="207dp"
+            tools:layout_editor_absoluteX="36dp"
+            android:id="@+id/satFatLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="4.1g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="209dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/satFat" />
+
+        <TextView
+            android:text="Carbohydrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="239dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:id="@+id/carbLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="3.6g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="244dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/carb" />
+
+        <TextView
+            android:text="– Sugars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="261dp"
+            tools:layout_editor_absoluteX="36dp"
+            android:id="@+id/sugarsLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="2g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="261dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/sugars" />
+
+        <TextView
+            android:text="Protiens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="291dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:id="@+id/ProtiensLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="12.3g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="296dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/protiens" />
+
+        <TextView
+            android:text="Salt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="324dp"
+            tools:layout_editor_absoluteX="16dp"
+            android:id="@+id/saltLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="0.7874g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="329dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/salt" />
+
+        <TextView
+            android:text="– Sodium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="346dp"
+            tools:layout_editor_absoluteX="36dp"
+            android:id="@+id/sodiumLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:text="0.31g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="351dp"
+            tools:layout_editor_absoluteX="301dp"
+            android:id="@+id/sodium" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

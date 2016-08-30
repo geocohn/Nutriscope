@@ -22,7 +22,7 @@
         tools:context="com.creationgroundmedia.nutriscope.detail.DetailDescriptionFragment">
 
         <TextView
-            android:id="@+id/IngredientssLabel"
+            android:id="@+id/NutritionLevelsLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -43,9 +43,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="Description Soluta assueverit has id. Vel tempor vivendo recteque ea. Mei ad agam perpetua laboramus. Mea ex dicam prompta tractatos, ut dicta soleat labitur usu. Vix ei iusto tation, modus regione elaboraret pro in, ei duo dicta libris. Cum et maluisset eloquentiam."
-            app:layout_constraintLeft_toLeftOf="@+id/IngredientssLabel"
+            app:layout_constraintLeft_toLeftOf="@+id/NutritionLevelsLabel"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/IngredientssLabel"
+            app:layout_constraintTop_toBottomOf="@+id/NutritionLevelsLabel"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 

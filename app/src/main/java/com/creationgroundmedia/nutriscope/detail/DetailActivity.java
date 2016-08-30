@@ -180,10 +180,12 @@ public class DetailActivity extends AppCompatActivity {
                     return DetailIngredientsFragment.newInstance(
                             mRowId, mProductName, mProductUpc);
                 }
-                default: {
-                    return PlaceholderFragment.newInstance(position + 1);
+                case 2: {
+                    return DetailNutritionFragment.newInstance(
+                            mRowId, mProductName, mProductUpc);
                 }
             }
+            return null;
         }
 
         @Override
