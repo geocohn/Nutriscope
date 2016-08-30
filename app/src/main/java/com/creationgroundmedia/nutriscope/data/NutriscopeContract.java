@@ -59,10 +59,15 @@ public class NutriscopeContract {
         public static final String COLUMN_ALLERGENS = "allergens";
         public static final String COLUMN_TRACES = "traces";
         public static final String COLUMN_ADDITIVES = "additives";
-        public static final String COLUMN_FATS = "fats";
+        public static final String COLUMN_FAT = "fats";
+        public static final String COLUMN_FATLEVEL = "fatlevel";
+        public static final String COLUMN_FIBER = "fiber";
         public static final String COLUMN_SATURATEDFATS = "saturatedfats";
-        public static final String COLUMN_SUGARS = "sugars";
+        public static final String COLUMN_SATURATEDFATSLEVEL = "saturatedfatslevel";
         public static final String COLUMN_SALT = "salt";
+        public static final String COLUMN_SALTLEVEL = "saltlevel";
+        public static final String COLUMN_SUGARS = "sugars";
+        public static final String COLUMN_SUGARSLEVEL = "sugarslevel";
         public static final String COLUMN_ENERGY = "energy";
 
         public static Uri buildProductRowIdUri(long id) {

@@ -31,7 +31,9 @@ public class NutriscopeDbHelper extends SQLiteOpenHelper {
                 ProductsEntry.COLUMN_CATEGORIES + " TEXT, " +
                 ProductsEntry.COLUMN_CITY + " TEXT, " +
                 ProductsEntry.COLUMN_ENERGY + " TEXT, " +
-                ProductsEntry.COLUMN_FATS + " TEXT, " +
+                ProductsEntry.COLUMN_FAT + " TEXT, " +
+                ProductsEntry.COLUMN_FATLEVEL + " TEXT, " +
+                ProductsEntry.COLUMN_FIBER + " TEXT, " +
                 ProductsEntry.COLUMN_IMAGE + " TEXT, " + // imageUrl
                 ProductsEntry.COLUMN_IMAGESMALL + " TEXT, " + // imageSmallUrl
                 ProductsEntry.COLUMN_IMAGETHUMB + " TEXT, " + // imageThumbUrl
@@ -43,9 +45,12 @@ public class NutriscopeDbHelper extends SQLiteOpenHelper {
                 ProductsEntry.COLUMN_PRODUCTID + " TEXT, " +
                 ProductsEntry.COLUMN_QUANTITY + " TEXT, " +
                 ProductsEntry.COLUMN_SALT + " TEXT, " +
+                ProductsEntry.COLUMN_SALTLEVEL + " TEXT, " +
                 ProductsEntry.COLUMN_SATURATEDFATS + " TEXT, " +
+                ProductsEntry.COLUMN_SATURATEDFATSLEVEL + " TEXT, " +
                 ProductsEntry.COLUMN_STORES + " TEXT, " +
                 ProductsEntry.COLUMN_SUGARS + " TEXT, " +
+                ProductsEntry.COLUMN_SUGARSLEVEL + " TEXT, " +
                 ProductsEntry.COLUMN_TRACES + " TEXT );";
 
         sqLiteDatabase.execSQL(SQL_CREATE_LOCATION_TABLE);

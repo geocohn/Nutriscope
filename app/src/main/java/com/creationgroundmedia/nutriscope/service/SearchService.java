@@ -22,13 +22,14 @@ import com.creationgroundmedia.nutriscope.pojos.Product;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import static android.text.TextUtils.concat;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -320,29 +321,65 @@ public class SearchService extends IntentService {
         for (Product product : products) {
             ContentValues productValues = new ContentValues();
 
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID, product.getId());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ADDITIVES, product.getAdditives());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ALLERGENS, product.getAllergens());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS, spacesAfterCommas(product.getBrands()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES, spacesAfterCommas(product.getCategories()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY, String.valueOf(product.getOrigins()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ENERGY, product.getNutriments().getEnergy100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATS, product.getNutriments().getEnergy100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGE, product.getImageFrontUrl());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGESMALL, product.getImageFrontSmallUrl());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGETHUMB, product.getImageFrontThumbUrl());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS, commaSeparateIngredients(product.getIngredients()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTSIMAGE, product.getImageIngredientsUrl());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATS, product.getNutriments().getFat100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_LABELS, spacesAfterCommas(product.getLabels()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_NAME, product.getProductName());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING, spacesAfterCommas(product.getPackaging()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_QUANTITY, product.getQuantity());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALT, product.getNutriments().getSalt100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATS, product.getNutriments().getSaturatedFat100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES, spacesAfterCommas(product.getStores()));
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARS, product.getNutriments().getSugars100g());
-            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_TRACES, product.getTraces());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID,
+                    product.getId());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ADDITIVES,
+                    product.getAdditives());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ALLERGENS,
+                    product.getAllergens());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS,
+                    spacesAfterCommas(product.getBrands()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES,
+                    spacesAfterCommas(product.getCategories()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY,
+                    String.valueOf(product.getOrigins()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ENERGY,
+                    (String) concat(product.getNutriments().getEnergy100g(),
+                            product.getNutriments().getEnergyUnit()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATLEVEL,
+                    product.getNutrientLevels().getFat());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FAT,
+                    (String) concat(product.getNutriments().getFat100g(),
+                            product.getNutriments().getFatUnit()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FIBER,
+                    (String) concat(product.getNutriments().getFiber100g(),
+                            product.getNutriments().getFiberUnit()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGE,
+                    product.getImageFrontUrl());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGESMALL,
+                    product.getImageFrontSmallUrl());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGETHUMB,
+                    product.getImageFrontThumbUrl());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS,
+                    commaSeparateIngredients(product.getIngredients()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTSIMAGE,
+                    product.getImageIngredientsUrl());
+             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_LABELS,
+                    spacesAfterCommas(product.getLabels()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_NAME,
+                    product.getProductName());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING,
+                    spacesAfterCommas(product.getPackaging()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_QUANTITY,
+                    product.getQuantity());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALT,
+                    (String) concat(product.getNutriments().getSalt100g(), "g"));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALTLEVEL,
+                    product.getNutrientLevels().getSalt());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATS,
+                    (String) concat(product.getNutriments().getSaturatedFat100g(),
+                            product.getNutriments().getSaturatedFatUnit()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATSLEVEL,
+                    product.getNutrientLevels().getSaturatedFat());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES,
+                    spacesAfterCommas(product.getStores()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARS,
+                    (String) concat(product.getNutriments().getSugars100g(),
+                            product.getNutriments().getSugarsUnit()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARSLEVEL,
+                    product.getNutrientLevels().getSugars());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_TRACES,
+                    product.getTraces());
 
             contentValuesVector.add(productValues);
         }
