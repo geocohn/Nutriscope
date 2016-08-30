@@ -377,6 +377,9 @@ public class SearchService extends IntentService {
                             product.getNutriments().getSaturatedFatUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATSLEVEL,
                     product.getNutrientLevels().getSaturatedFat());
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SODIUM,
+                    (String) concat(product.getNutriments().getSodium100g(),
+                            product.getNutriments().getSodiumUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES,
                     spacesAfterCommas(product.getStores()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARS,

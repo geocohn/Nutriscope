@@ -68,6 +68,7 @@ public class NutriscopeContract {
         public static final String COLUMN_SATURATEDFATSLEVEL = "saturatedfatslevel";
         public static final String COLUMN_SALT = "salt";
         public static final String COLUMN_SALTLEVEL = "saltlevel";
+        public static final String COLUMN_SODIUM = "sodium";
         public static final String COLUMN_SUGARS = "sugars";
         public static final String COLUMN_SUGARSLEVEL = "sugarslevel";
         public static final String COLUMN_ENERGY = "energy";
