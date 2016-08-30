@@ -138,7 +138,7 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
             return;
         }
         data.moveToFirst();
-        TextView categoriesView = (TextView) mView.findViewById(R.id.ingredients);
+        TextView categoriesView =  (TextView) mView.findViewById(R.id.ingredients);
         TextView labelsView = (TextView) mView.findViewById(R.id.possibleAllergens);
         TextView brandsView = (TextView) mView.findViewById(R.id.brands);
         TextView storesView = (TextView) mView.findViewById(R.id.stores);

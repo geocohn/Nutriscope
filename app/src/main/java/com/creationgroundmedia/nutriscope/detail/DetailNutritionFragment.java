@@ -2,6 +2,8 @@ package com.creationgroundmedia.nutriscope.detail;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -12,13 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,19 +32,35 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
     private static final int URL_LOADER = 3;
     private static final String[] PROJECTION = new String[]{
             NutriscopeContract.ProductsEntry._ID,
-            NutriscopeContract.ProductsEntry.COLUMN_ADDITIVES,
-            NutriscopeContract.ProductsEntry.COLUMN_ALLERGENS,
-            NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTS,
-            NutriscopeContract.ProductsEntry.COLUMN_INGREDIENTSIMAGE,
-            NutriscopeContract.ProductsEntry.COLUMN_TRACES
+            NutriscopeContract.ProductsEntry.COLUMN_FATLEVEL,
+            NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATSLEVEL,
+            NutriscopeContract.ProductsEntry.COLUMN_SUGARSLEVEL,
+            NutriscopeContract.ProductsEntry.COLUMN_SALTLEVEL,
+            NutriscopeContract.ProductsEntry.COLUMN_ENERGY,
+            NutriscopeContract.ProductsEntry.COLUMN_FAT,
+            NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATS,
+            NutriscopeContract.ProductsEntry.COLUMN_CARBOHYDRATES,
+            NutriscopeContract.ProductsEntry.COLUMN_SUGARS,
+            NutriscopeContract.ProductsEntry.COLUMN_PROTEINS,
+            NutriscopeContract.ProductsEntry.COLUMN_SALT,
+            NutriscopeContract.ProductsEntry.COLUMN_SODIUM,
+            NutriscopeContract.ProductsEntry.COLUMN_FIBER
     };
     // The following must agree with the PROJECTION above
     private static final int ID = 0;
-    private static final int ADDITIVES = 1;
-    private static final int ALLERGENS = 2;
-    private static final int INGREDIENTS = 3;
-    private static final int INGREDIENTSIMAGE = 4;
-    private static final int TRACES = 5;
+    private static final int FATLEVEL = 1;
+    private static final int SATURATEDFATSLEVEL = 2;
+    private static final int SUGARSLEVEL = 3;
+    private static final int SALTLEVEL = 4;
+    private static final int ENERGY = 5;
+    private static final int FAT = 6;
+    private static final int SATURATEDFATS = 7;
+    private static final int CARBOHYDRATES = 8;
+    private static final int SUGARS = 9;
+    private static final int PROTEINS = 10;
+    private static final int SALT = 11;
+    private static final int SODIUM = 12;
+    private static final int FIBER = 13;
 
     private static final String LOG_TAG = DetailNutritionFragment.class.getSimpleName();
 
@@ -139,35 +154,66 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
             return;
         }
         data.moveToFirst();
-        final ImageView labelPhoto = (ImageView) mView.findViewById(R.id.labelPhoto);
-        TextView ingredientsView = (TextView) mView.findViewById(R.id.ingredients);
-        TextView allergensView = (TextView) mView.findViewById(R.id.possibleAllergens);
-        TextView tracesView = (TextView) mView.findViewById(R.id.traces);
-        TextView additivesView = (TextView) mView.findViewById(R.id.additives);
-        final ProgressBar labelPhotoProgressBar = (ProgressBar) mView.findViewById(R.id.labelPhotoProgressBar);
+        ImageView fatLevelIndicator = (ImageView) mView.findViewById(R.id.fatIndicator);
+        TextView fatLevelText = (TextView) mView.findViewById(R.id.fatLevel);
+        ImageView satFatLevelIndicator = (ImageView) mView.findViewById(R.id.satFatIndicator);
+        TextView satFatLevelText = (TextView) mView.findViewById(R.id.satFatLevel);
+        ImageView sugarLevelIndicator = (ImageView) mView.findViewById(R.id.sugarsIndicator);
+        TextView sugarLevelText = (TextView) mView.findViewById(R.id.sugarsLevel);
+        ImageView saltLevelIndicator = (ImageView) mView.findViewById(R.id.saltIndicator);
+        TextView saltLevelText = (TextView) mView.findViewById(R.id.saltLevel);
 
-        labelPhoto.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        labelPhoto.setAdjustViewBounds(true);
-        labelPhoto.setPadding(4, 4, 4, 4);
-        labelPhotoProgressBar.setVisibility(View.VISIBLE);
-        Picasso.with(mContext)
-                .load(data.getString(INGREDIENTSIMAGE))
-                .into(labelPhoto, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        labelPhotoProgressBar.setVisibility(View.GONE);
-                    }
-                    @Override
-                    public void onError() {
-                        labelPhoto.setImageResource(R.mipmap.ic_poster_placeholder);
-                        labelPhotoProgressBar.setVisibility(View.GONE);
-                    }
-                });
+        TextView energyJoules = (TextView) mView.findViewById(R.id.energyJoules);
+        TextView fat = (TextView) mView.findViewById(R.id.totalFat);
+        TextView satFat = (TextView) mView.findViewById(R.id.satFat);
+        TextView carb = (TextView) mView.findViewById(R.id.carb);
+        TextView sugars = (TextView) mView.findViewById(R.id.sugars);
+        TextView proteins = (TextView) mView.findViewById(R.id.proteins);
+        TextView salt = (TextView) mView.findViewById(R.id.salt);
+        TextView sodium = (TextView) mView.findViewById(R.id.sodium);
+        TextView fiber = (TextView) mView.findViewById(R.id.fiber);
 
-        ingredientsView.setText(data.getString(INGREDIENTS));
-        allergensView.setText(data.getString(ALLERGENS));
-        additivesView.setText(data.getString(ADDITIVES));
-        tracesView.setText(data.getString(TRACES));
+
+        fatLevelIndicator.setColorFilter(
+                getColorForLevel(data.getString(FATLEVEL)), PorterDuff.Mode.SRC_ATOP);
+        fatLevelText.setText(textForLevel(data.getString(FAT), "Fat", data.getString(FATLEVEL)));
+        satFatLevelIndicator.setColorFilter(
+                getColorForLevel(data.getString(SATURATEDFATSLEVEL)), PorterDuff.Mode.SRC_ATOP);
+        satFatLevelText.setText(textForLevel(data.getString(SATURATEDFATS), "Saturated fat", data.getString(SATURATEDFATSLEVEL)));
+        sugarLevelIndicator.setColorFilter(
+                getColorForLevel(data.getString(SUGARSLEVEL)), PorterDuff.Mode.SRC_ATOP);
+        sugarLevelText.setText(textForLevel(data.getString(SUGARS), "Sugars", data.getString(SUGARSLEVEL)));
+        saltLevelIndicator.setColorFilter(
+                getColorForLevel(data.getString(SALTLEVEL)), PorterDuff.Mode.SRC_ATOP);
+        saltLevelText.setText(textForLevel(data.getString(SALT), "Salt", data.getString(SALTLEVEL)));
+
+        energyJoules.setText(data.getString(ENERGY));
+        fat.setText(data.getString(FAT));
+        satFat.setText(data.getString(SATURATEDFATS));
+        carb.setText(data.getString(CARBOHYDRATES));
+        sugars.setText(data.getString(SUGARS));
+        proteins.setText(data.getString(PROTEINS));
+        salt.setText(data.getString(SALT));
+        sodium.setText(data.getString(SODIUM));
+        fiber.setText(data.getString(FIBER));
+    }
+
+    private CharSequence textForLevel(String quantity, String nutrient, String level) {
+        if (quantity == null || level == null)
+            return String.format("No data found for %s", nutrient);
+        return String.format("%s %s in %s quantity", quantity, nutrient, level);
+    }
+
+    private int getColorForLevel(String level) {
+        if (level != null) {
+            if (level.compareToIgnoreCase("low") == 0)
+                return Color.GREEN;
+            if (level.compareToIgnoreCase("moderate") == 0)
+                return Color.YELLOW;
+            if (level.compareToIgnoreCase("high") == 0)
+                return Color.RED;
+        }
+        return Color.WHITE;
     }
 
     @Override

@@ -330,22 +330,22 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS,
                     spacesAfterCommas(product.getBrands()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CARBOHYDRATES,
-                    (String) concat(product.getNutriments().getCarbohydrates100g(),
+                    quantityWithUnits(product.getNutriments().getCarbohydrates100g(),
                             product.getNutriments().getCarbohydratesUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES,
                     spacesAfterCommas(product.getCategories()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY,
                     String.valueOf(product.getOrigins()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ENERGY,
-                    (String) concat(product.getNutriments().getEnergy100g(),
+                    quantityWithUnits(product.getNutriments().getEnergy100g(),
                             product.getNutriments().getEnergyUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATLEVEL,
                     product.getNutrientLevels().getFat());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FAT,
-                    (String) concat(product.getNutriments().getFat100g(),
+                    quantityWithUnits(product.getNutriments().getFat100g(),
                             product.getNutriments().getFatUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FIBER,
-                    (String) concat(product.getNutriments().getFiber100g(),
+                    quantityWithUnits(product.getNutriments().getFiber100g(),
                             product.getNutriments().getFiberUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGE,
                     product.getImageFrontUrl());
@@ -364,26 +364,26 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING,
                     spacesAfterCommas(product.getPackaging()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PROTEINS,
-                    (String) concat(product.getNutriments().getProteins100g(),
+                    quantityWithUnits(product.getNutriments().getProteins100g(),
                             product.getNutriments().getProteinsUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_QUANTITY,
                     product.getQuantity());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALT,
-                    (String) concat(product.getNutriments().getSalt100g(), "g"));
+                    quantityWithUnits(product.getNutriments().getSalt100g(), "g"));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALTLEVEL,
                     product.getNutrientLevels().getSalt());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATS,
-                    (String) concat(product.getNutriments().getSaturatedFat100g(),
+                    quantityWithUnits(product.getNutriments().getSaturatedFat100g(),
                             product.getNutriments().getSaturatedFatUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATSLEVEL,
                     product.getNutrientLevels().getSaturatedFat());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SODIUM,
-                    (String) concat(product.getNutriments().getSodium100g(),
+                    quantityWithUnits(product.getNutriments().getSodium100g(),
                             product.getNutriments().getSodiumUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES,
                     spacesAfterCommas(product.getStores()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARS,
-                    (String) concat(product.getNutriments().getSugars100g(),
+                    quantityWithUnits(product.getNutriments().getSugars100g(),
                             product.getNutriments().getSugarsUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARSLEVEL,
                     product.getNutrientLevels().getSugars());
@@ -399,6 +399,16 @@ public class SearchService extends IntentService {
 
             getContentResolver().bulkInsert(uri, contentValuesArray);
         }
+    }
+
+    private String quantityWithUnits(String quantity, String units) {
+        return (String) concat(emptyIfNull(quantity), emptyIfNull(units));
+    }
+
+    private CharSequence emptyIfNull(String str) {
+        if (str == null)
+            return "";
+        return str;
     }
 
     private String commaSeparateIngredients(List<Ingredients> ingredients) {
