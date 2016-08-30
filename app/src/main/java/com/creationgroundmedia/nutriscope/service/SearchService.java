@@ -363,6 +363,9 @@ public class SearchService extends IntentService {
                     product.getProductName());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING,
                     spacesAfterCommas(product.getPackaging()));
+            productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PROTEINS,
+                    (String) concat(product.getNutriments().getProteins100g(),
+                            product.getNutriments().getProteinsUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_QUANTITY,
                     product.getQuantity());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALT,
