@@ -46,14 +46,14 @@
 
         <TextView
             android:text="11.7g Fat in moderate quantity"
-            android:layout_width="312dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fatQuantity"
             app:layout_constraintLeft_toRightOf="@+id/fatIndicator"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/NutritionLevelsLabel"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            app:layout_constraintTop_toTopOf="@+id/fatIndicator"
+            android:layout_marginTop="4dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -70,9 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/satFatQuantity"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/fatQuantity"
-            app:layout_constraintLeft_toLeftOf="@+id/fatQuantity" />
+            app:layout_constraintTop_toBottomOf="@+id/fatIndicator"
+            app:layout_constraintLeft_toLeftOf="@+id/fatQuantity"
+            android:layout_marginTop="4dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -89,9 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sugarsQuantity"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/satFatQuantity"
-            app:layout_constraintLeft_toLeftOf="@+id/satFatQuantity" />
+            app:layout_constraintLeft_toLeftOf="@+id/satFatQuantity"
+            app:layout_constraintTop_toTopOf="@+id/sugarsIndicator"
+            android:layout_marginTop="4dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -108,9 +108,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/saltQuantity"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/sugarsQuantity"
-            app:layout_constraintLeft_toLeftOf="@+id/sugarsQuantity" />
+            app:layout_constraintLeft_toLeftOf="@+id/sugarsQuantity"
+            app:layout_constraintTop_toTopOf="@+id/saltIndicator"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:text="Energy"
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/EnergyLabel"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/saltIndicator"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -171,7 +171,6 @@
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/fatLabel" />
 
         <TextView
@@ -211,7 +210,6 @@
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/carbLabel" />
 
         <TextView
@@ -223,10 +221,10 @@
             app:layout_constraintTop_toTopOf="@+id/sugarsLabel" />
 
         <TextView
-            android:text="Protiens"
+            android:text="Proteins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ProtiensLabel"
+            android:id="@+id/ProteinsLabel"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/sugarsLabel"
@@ -238,8 +236,8 @@
             android:text="12.3g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/protiens"
-            app:layout_constraintTop_toTopOf="@+id/ProtiensLabel"
+            android:id="@+id/proteins"
+            app:layout_constraintTop_toTopOf="@+id/ProteinsLabel"
             app:layout_constraintLeft_toLeftOf="@+id/energyCalories" />
 
         <TextView
@@ -249,7 +247,7 @@
             android:id="@+id/saltLabel"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/ProtiensLabel"
+            app:layout_constraintTop_toBottomOf="@+id/ProteinsLabel"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="16dp" />
@@ -268,10 +266,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/sodiumLabel"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_marginStart="16dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/saltLabel" />
+            tools:layout_editor_absoluteY="344dp"
+            tools:layout_editor_absoluteX="16dp" />
 
         <TextView
             android:text="0.31g"
@@ -279,6 +275,26 @@
             android:layout_height="wrap_content"
             android:id="@+id/sodium"
             app:layout_constraintTop_toTopOf="@+id/sodiumLabel"
+            app:layout_constraintLeft_toLeftOf="@+id/energyCalories" />
+
+        <TextView
+            android:text="Fiber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fiberLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/sodiumLabel"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp" />
+
+        <TextView
+            android:text="3.5g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fiber"
+            app:layout_constraintTop_toTopOf="@+id/fiberLabel"
             app:layout_constraintLeft_toLeftOf="@+id/energyCalories" />
 
     </android.support.constraint.ConstraintLayout>
