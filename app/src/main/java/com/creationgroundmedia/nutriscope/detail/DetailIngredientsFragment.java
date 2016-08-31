@@ -5,8 +5,13 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -164,10 +169,56 @@ public class DetailIngredientsFragment extends Fragment implements LoaderManager
                     }
                 });
 
-        ingredientsView.setText(data.getString(INGREDIENTS));
+        ingredientsView.setText(delineateAllergens(data.getString(INGREDIENTS)),
+                TextView.BufferType.SPANNABLE);
         allergensView.setText(data.getString(ALLERGENS));
         additivesView.setText(data.getString(ADDITIVES));
         tracesView.setText(data.getString(TRACES));
+    }
+
+    private SpannableString delineateAllergens(String ingredients) {
+        /**
+         * look for substrings delimited by '_' and paint them the theme's primary dark,
+         * removing the delimiters
+         */
+        if (ingredients == null)
+            return SpannableString.valueOf("");
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        for (int startIndex = 0, endIndex = 0;
+             endIndex >= 0 && startIndex < ingredients.length();
+             startIndex++) {
+            /**
+             * find the start of the next delimited substring,
+             * and deliver everything up to it as normal text
+             */
+            endIndex = ingredients.indexOf('_', startIndex);
+            if (startIndex < endIndex) {
+                String s = ingredients.substring(startIndex, endIndex);
+                builder.append(s);
+            }
+            startIndex = endIndex + 1;
+
+            if (endIndex >= 0 && startIndex < ingredients.length()) {
+                /**
+                 * throw a color span on the delimited text and deliver it
+                 */
+                endIndex = ingredients.indexOf('_', startIndex);
+                if (startIndex < endIndex) {
+                    SpannableString ss = new SpannableString(
+                            ingredients.substring(startIndex, endIndex));
+                    ss.setSpan(new ForegroundColorSpan(
+                                    ContextCompat.getColor(mContext, R.color.colorPrimaryDark)),
+                            0, ss.length() - 1,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    builder.append(ss);
+                }
+                startIndex = endIndex;
+            }
+        }
+
+        return SpannableString.valueOf(builder);
     }
 
     @Override
