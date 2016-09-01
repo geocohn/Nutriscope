@@ -2,6 +2,9 @@ package com.creationgroundmedia.nutriscope.detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,10 +24,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -47,13 +54,21 @@ public class DetailActivity extends AppCompatActivity {
     private long mRowId;
     private String mProductName;
     private String mProductUpc;
+    private String mImage;
+    private ImageView mActionBarBackground;
+    private Target mBgImage;
 
-    public static void launchInstance(Context context, long rowId, String name, String upc) {
+    public static void launchInstance(Context context,
+                                      long rowId,
+                                      String name,
+                                      String upc,
+                                      String image) {
         Intent intent = new Intent(context, DetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putLong(NutriscopeContract.ProductsEntry._ID, rowId);
         bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_NAME, name);
         bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID, upc);
+        bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_IMAGE, image);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
@@ -74,10 +89,34 @@ public class DetailActivity extends AppCompatActivity {
         mRowId = extras.getLong(NutriscopeContract.ProductsEntry._ID);
         mProductName = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_NAME);
         mProductUpc = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID);
+        mImage = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_IMAGE);
 
         Log.d(LOG_TAG, "onCreate(" + mRowId + ", " + mProductName + ", " + mProductUpc + ")");
         actionBar.setTitle(mProductName);
         actionBar.setSubtitle(mProductUpc);
+
+        mBgImage = new Target() {
+
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                ActionBar actionBar = getSupportActionBar();
+                BitmapDrawable background =
+                        new BitmapDrawable(getApplicationContext().getResources(), bitmap);
+                actionBar.setBackgroundDrawable(background);
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+
+        Picasso.with(this).load(mImage) .centerCrop().into(mBgImage);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 

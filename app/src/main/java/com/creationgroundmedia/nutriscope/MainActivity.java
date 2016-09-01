@@ -46,15 +46,18 @@ public class MainActivity
 
     private static final String[] PROJECTION = new String[] {
             NutriscopeContract.ProductsEntry._ID,
+            NutriscopeContract.ProductsEntry.COLUMN_IMAGE,
             NutriscopeContract.ProductsEntry.COLUMN_IMAGETHUMB,
             NutriscopeContract.ProductsEntry.COLUMN_NAME,
             NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID
     };
     // The following must agree with the PROJECTION above
     private static final int ID = 0;
-    private static final int THUMB = 1;
-    private static final int NAME = 2;
-    private static final int PRODUCTID = 3;
+    private static final int IMAGE = 1;
+    private static final int THUMB = 2;
+    private static final int NAME = 3;
+    private static final int PRODUCTID = 4;
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_BARCODE_CAPTURE = 9001;
 
@@ -336,6 +339,7 @@ public class MainActivity
         public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor) {
             final String productUpc = cursor.getString(PRODUCTID);
             final String productName = cursor.getString(NAME);
+            final String productImage = cursor.getString(IMAGE);
             String thumb = cursor.getString(THUMB);
             viewHolder.mProductId.setText(productUpc);
             viewHolder.mName.setText(productName);
@@ -361,7 +365,7 @@ public class MainActivity
                 public void onClick(View view) {
                     Log.d(LOG_TAG, "Clicked item " + rowId);
                     DetailActivity.launchInstance(
-                            view.getContext(), rowId, productName, productUpc);
+                            view.getContext(), rowId, productName, productUpc, productImage);
                 }
             });
         }
