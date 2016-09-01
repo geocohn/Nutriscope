@@ -138,11 +138,11 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
             return;
         }
         data.moveToFirst();
-        TextView categoriesView =  (TextView) mView.findViewById(R.id.ingredients);
-        TextView labelsView = (TextView) mView.findViewById(R.id.possibleAllergens);
+        TextView categoriesView =  (TextView) mView.findViewById(R.id.categories);
+        TextView labelsView = (TextView) mView.findViewById(R.id.labels);
         TextView brandsView = (TextView) mView.findViewById(R.id.brands);
         TextView storesView = (TextView) mView.findViewById(R.id.stores);
-        TextView cityView = (TextView) mView.findViewById(R.id.traces);
+        TextView cityView = (TextView) mView.findViewById(R.id.city);
         TextView quantityView = (TextView) mView.findViewById(R.id.quantity);
         TextView packagingView = (TextView) mView.findViewById(R.id.packaging);
 

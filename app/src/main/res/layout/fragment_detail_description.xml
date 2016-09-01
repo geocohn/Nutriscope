@@ -22,58 +22,58 @@
         tools:context="com.creationgroundmedia.nutriscope.detail.DetailDescriptionFragment">
 
         <TextView
-            android:id="@+id/NutritionLevelsLabel"
+            android:id="@+id/CategoriesLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:text="Categories"
-            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            tools:layout_constraintTop_creator="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
-            android:id="@+id/ingredients"
+            android:id="@+id/categories"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="Description Soluta assueverit has id. Vel tempor vivendo recteque ea. Mei ad agam perpetua laboramus. Mea ex dicam prompta tractatos, ut dicta soleat labitur usu. Vix ei iusto tation, modus regione elaboraret pro in, ei duo dicta libris. Cum et maluisset eloquentiam."
-            app:layout_constraintLeft_toLeftOf="@+id/NutritionLevelsLabel"
+            app:layout_constraintLeft_toLeftOf="@+id/CategoriesLabel"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/NutritionLevelsLabel"
+            app:layout_constraintTop_toBottomOf="@+id/CategoriesLabel"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 
         <TextView
-            android:id="@+id/possibleAllergensLabel"
+            android:id="@+id/labelsLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:text="Labels, certifications, awards"
-            android:textStyle="bold"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="@+id/ingredients"
-            app:layout_constraintRight_toRightOf="@+id/ingredients"
-            app:layout_constraintTop_toBottomOf="@+id/ingredients"
+            app:layout_constraintLeft_toLeftOf="@+id/categories"
+            app:layout_constraintRight_toRightOf="@+id/categories"
+            app:layout_constraintTop_toBottomOf="@+id/categories"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            tools:layout_constraintTop_creator="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
-            android:id="@+id/possibleAllergens"
+            android:id="@+id/labels"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Lorem ipsum dolor sit amet, duo ut quidam voluptatibus, pri te duis docendi. Ferri intellegam vim ad, reque ridens expetendis cum ad. Sea fuisset nostrum disputationi ut, copiosae gloriatur ut eos. Has at debitis nonumes. Ubique nostrud conceptam usu ut, no ius rebum aeque assueverit, in mei quot error saepe."
-            app:layout_constraintLeft_toLeftOf="@+id/possibleAllergensLabel"
-            app:layout_constraintRight_toRightOf="@+id/possibleAllergensLabel"
-            app:layout_constraintTop_toBottomOf="@+id/possibleAllergensLabel"
+            app:layout_constraintLeft_toLeftOf="@+id/labelsLabel"
+            app:layout_constraintRight_toRightOf="@+id/labelsLabel"
+            app:layout_constraintTop_toBottomOf="@+id/labelsLabel"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"
             tools:layout_constraintTop_creator="1" />
@@ -84,9 +84,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Brands:"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@+id/possibleAllergens"
-            app:layout_constraintTop_toBottomOf="@+id/possibleAllergens" />
+            app:layout_constraintLeft_toLeftOf="@+id/labels"
+            app:layout_constraintTop_toBottomOf="@+id/labels"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/brands"
@@ -94,51 +94,52 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="Et mutat constituam scripserit nec."
             app:layout_constraintLeft_toRightOf="@+id/brandsLabel"
-            app:layout_constraintTop_toBottomOf="@+id/possibleAllergens" />
+            app:layout_constraintTop_toTopOf="@+id/brandsLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/brandsLabel" />
 
         <TextView
             android:id="@+id/storesLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stores:"
-            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@+id/brandsLabel"
-            app:layout_constraintTop_toBottomOf="@+id/brands" />
+            app:layout_constraintTop_toBottomOf="@+id/brandsLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/stores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Et mutat constituam scripserit nec."
-            app:layout_constraintLeft_toRightOf="@+id/brandsLabel"
             app:layout_constraintTop_toBottomOf="@+id/brandsLabel"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            tools:layout_constraintTop_creator="1"
+            app:layout_constraintLeft_toRightOf="@+id/storesLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/storesLabel"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
 
         <TextView
-            android:id="@+id/tracesLabel"
+            android:id="@+id/cityLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="City, State, Country purchased"
-            android:textStyle="bold"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="@+id/possibleAllergens"
-            app:layout_constraintRight_toRightOf="@+id/possibleAllergens"
+            app:layout_constraintLeft_toLeftOf="@+id/storesLabel"
             app:layout_constraintTop_toBottomOf="@+id/stores"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1" />
+            tools:layout_constraintRight_creator="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
-            android:id="@+id/traces"
+            android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="audire constituam vel ad"
-            app:layout_constraintLeft_toLeftOf="@+id/tracesLabel"
-            app:layout_constraintTop_toBottomOf="@+id/tracesLabel"
+            app:layout_constraintLeft_toLeftOf="@+id/cityLabel"
+            app:layout_constraintTop_toBottomOf="@+id/cityLabel"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintTop_creator="1" />
 
@@ -148,11 +149,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Quantity:"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@+id/traces"
-            app:layout_constraintTop_toBottomOf="@+id/traces"
+            app:layout_constraintLeft_toLeftOf="@+id/city"
+            app:layout_constraintTop_toBottomOf="@+id/city"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            tools:layout_constraintTop_creator="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/quantity"
@@ -160,12 +161,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="400g"
             app:layout_constraintLeft_toRightOf="@+id/quantityLabel"
-            app:layout_constraintTop_toBottomOf="@+id/traces"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            app:layout_constraintTop_toTopOf="@+id/quantityLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/quantityLabel" />
 
         <TextView
             android:id="@+id/packagingLabel"
@@ -175,9 +175,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Packaging:"
-            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quantityLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/quantityLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/packaging"
@@ -187,10 +187,10 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="his abhorreant vituperata"
             app:layout_constraintLeft_toRightOf="@+id/packagingLabel"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quantity" />
+            app:layout_constraintTop_toTopOf="@+id/packagingLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/packagingLabel" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

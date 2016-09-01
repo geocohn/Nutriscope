@@ -22,26 +22,27 @@
         tools:context="com.creationgroundmedia.nutriscope.detail.DetailIngredientsFragment">
 
         <TextView
-            android:id="@+id/NutritionLevelsLabel"
+            android:id="@+id/CategoriesLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:text="Ingredients"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteY="6dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="16dp"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="16dp" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/ingredients"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="Ingredients Soluta assueverit has id. Vel tempor vivendo recteque ea. Mei ad agam perpetua laboramus. Mea ex dicam prompta tractatos, ut dicta soleat labitur usu. Vix ei iusto tation, modus regione elaboraret pro in, ei duo dicta libris. Cum et maluisset eloquentiam."
-            app:layout_constraintTop_toBottomOf="@+id/NutritionLevelsLabel"
+            app:layout_constraintTop_toBottomOf="@+id/CategoriesLabel"
             android:layout_marginStart="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="16dp"
@@ -55,7 +56,6 @@
             android:layout_height="0dp"
             android:ems="10"
             android:text="Possible allergens"
-            android:textStyle="bold"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/ingredients"
             android:layout_marginStart="16dp"
@@ -63,7 +63,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/possibleAllergens"
@@ -76,14 +77,14 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="16dp"
-            android:text="Possible Allergens Lorem ipsum dolor sit amet, duo ut quidam voluptatibus, pri te duis docendi. Ferri intellegam vim ad, reque ridens expetendis cum ad. Sea fuisset nostrum disputationi ut, copiosae gloriatur ut eos. Has at debitis nonumes. Ubique nostrud conceptam usu ut, no ius rebum aeque assueverit, in mei quot error saepe." />
+            android:text="Possible Allergens Lorem ipsum dolor sit amet, duo ut quidam voluptatibus, pri te duis docendi. Ferri intellegam vim ad, reque ridens expetendis cum ad. Sea fuisset nostrum disputationi ut, copiosae gloriatur ut eos. Has at debitis nonumes. Ubique nostrud conceptam usu ut, no ius rebum aeque assueverit, in mei quot error saepe."
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/tracesLabel"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="Traces"
-            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/possibleAllergens"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
@@ -91,7 +92,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/traces"
@@ -111,7 +113,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="Additives:"
-            android:textStyle="bold"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/traces"
             android:layout_marginStart="16dp"
@@ -119,7 +120,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/additives"
