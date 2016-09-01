@@ -46,7 +46,6 @@
             android:layout_marginTop="8dp" />
 
         <TextView
-            android:text="11.7g Fat in moderate quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fatLevel"
@@ -67,7 +66,6 @@
             app:layout_constraintTop_toBottomOf="@+id/fatIndicator" />
 
         <TextView
-            android:text="4.1g Saturated fat in moderate quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/satFatLevel"
@@ -86,7 +84,6 @@
             android:layout_marginLeft="24dp" />
 
         <TextView
-            android:text="2g Sugars in low quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sugarsLevel"
@@ -105,7 +102,6 @@
             app:layout_constraintTop_toBottomOf="@+id/sugarsIndicator" />
 
         <TextView
-            android:text="0.787g Salt in moderate quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/saltLevel"
@@ -126,7 +122,6 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:text="715 kj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/energyJoules"
@@ -148,7 +143,6 @@
             app:layout_constraintTop_toBottomOf="@+id/energyLabel" />
 
         <TextView
-            android:text="11.7g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/totalFat"
@@ -167,7 +161,6 @@
             app:layout_constraintTop_toBottomOf="@+id/fatLabel" />
 
         <TextView
-            android:text="4.1g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/satFat"
@@ -187,7 +180,6 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:text="3.6g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/carb"
@@ -206,7 +198,6 @@
             app:layout_constraintTop_toBottomOf="@+id/carbLabel" />
 
         <TextView
-            android:text="2g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sugars"
@@ -226,7 +217,6 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:text="12.3g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/proteins"
@@ -246,7 +236,6 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:text="0.7874g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/salt"
@@ -263,7 +252,6 @@
             app:layout_constraintLeft_toLeftOf="@+id/saltLabel" />
 
         <TextView
-            android:text="0.31g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sodium"
@@ -283,7 +271,6 @@
             android:layout_marginLeft="16dp" />
 
         <TextView
-            android:text="3.5g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fiber"
