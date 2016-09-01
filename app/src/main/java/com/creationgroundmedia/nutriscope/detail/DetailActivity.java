@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -57,6 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     private String mImage;
     private ImageView mActionBarBackground;
     private Target mBgImage;
+    private CollapsingToolbarLayout mCollapsingToolbar;
 
     public static void launchInstance(Context context,
                                       long rowId,
@@ -79,6 +81,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -102,7 +105,7 @@ public class DetailActivity extends AppCompatActivity {
                 ActionBar actionBar = getSupportActionBar();
                 BitmapDrawable background =
                         new BitmapDrawable(getApplicationContext().getResources(), bitmap);
-                actionBar.setBackgroundDrawable(background);
+                mCollapsingToolbar.setBackgroundDrawable(background);
             }
 
             @Override
@@ -116,7 +119,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         };
 
-        Picasso.with(this).load(mImage) .centerCrop().into(mBgImage);
+        Picasso.with(this).load(mImage).into(mBgImage);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
