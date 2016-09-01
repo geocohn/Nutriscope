@@ -378,7 +378,7 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATSLEVEL,
                     product.getNutrientLevels().getSaturatedFat());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SODIUM,
-                    quantityWithUnits(product.getNutriments().getSodium100g(),
+                    quantityWithUnits(limitDigits(product.getNutriments().getSodium100g(), 5),
                             product.getNutriments().getSodiumUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES,
                     spacesAfterCommas(product.getStores()));
@@ -388,7 +388,7 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARSLEVEL,
                     product.getNutrientLevels().getSugars());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_TRACES,
-                    product.getTraces());
+                    spacesAfterCommas(product.getTraces()));
 
             contentValuesVector.add(productValues);
         }
@@ -399,6 +399,12 @@ public class SearchService extends IntentService {
 
             getContentResolver().bulkInsert(uri, contentValuesArray);
         }
+    }
+
+    private String limitDigits(String value, int limit) {
+        if (value == null || value.length() < limit)
+            return value;
+        return value.substring(0, limit);
     }
 
     private String quantityWithUnits(String quantity, String units) {
@@ -413,6 +419,9 @@ public class SearchService extends IntentService {
 
     private String commaSeparateIngredients(List<Ingredients> ingredients) {
         String ingredientString = null;
+
+        if (ingredients == null)
+            return "";
 
         /**
          * Sort by rank
