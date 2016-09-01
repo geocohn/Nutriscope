@@ -58,7 +58,6 @@ public class DetailActivity extends AppCompatActivity {
     private String mImage;
     private ImageView mActionBarBackground;
     private Target mBgImage;
-    private CollapsingToolbarLayout mCollapsingToolbar;
 
     public static void launchInstance(Context context,
                                       long rowId,
@@ -81,7 +80,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mActionBarBackground = (ImageView) findViewById(R.id.toolbar_background);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -102,10 +101,9 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                ActionBar actionBar = getSupportActionBar();
                 BitmapDrawable background =
                         new BitmapDrawable(getApplicationContext().getResources(), bitmap);
-                mCollapsingToolbar.setBackgroundDrawable(background);
+                mActionBarBackground.setImageDrawable(background);
             }
 
             @Override
