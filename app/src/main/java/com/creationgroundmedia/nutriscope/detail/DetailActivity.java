@@ -2,15 +2,19 @@ package com.creationgroundmedia.nutriscope.detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -58,6 +62,8 @@ public class DetailActivity extends AppCompatActivity {
     private String mImage;
     private ImageView mActionBarBackground;
     private Target mBgImage;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private FloatingActionButton mfAB;
 
     public static void launchInstance(Context context,
                                       long rowId,
@@ -80,6 +86,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mActionBarBackground = (ImageView) findViewById(R.id.toolbar_background);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -101,9 +108,7 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                BitmapDrawable background =
-                        new BitmapDrawable(getApplicationContext().getResources(), bitmap);
-                mActionBarBackground.setImageDrawable(background);
+                setupActionBarBackground(bitmap);
             }
 
             @Override
@@ -129,8 +134,8 @@ public class DetailActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mfAB = (FloatingActionButton) findViewById(R.id.fab);
+        mfAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -138,6 +143,33 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setupActionBarBackground(Bitmap bitmap) {
+        BitmapDrawable background =
+                new BitmapDrawable(getApplicationContext().getResources(), bitmap);
+        mActionBarBackground.setImageDrawable(background);
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                mCollapsingToolbar.setContentScrimColor(palette.getMutedColor(
+                        ContextCompat.getColor(
+                                getApplicationContext(),
+                                R.color.colorPrimary)));
+                mCollapsingToolbar.setStatusBarScrimColor(palette.getDarkMutedColor(
+                        ContextCompat.getColor(
+                                getApplicationContext(),
+                                R.color.colorPrimaryDark)));
+                mfAB.setRippleColor(palette.getLightVibrantColor(
+                        ContextCompat.getColor(
+                                getApplicationContext(),
+                                R.color.colorPrimary)));
+                mfAB.setBackgroundTintList(ColorStateList.valueOf(palette.getVibrantColor(
+                        ContextCompat.getColor(
+                                getApplicationContext(),
+                                R.color.colorAccent))));
+            }
+        });
     }
 
 
