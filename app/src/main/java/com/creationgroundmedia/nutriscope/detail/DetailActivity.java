@@ -64,6 +64,7 @@ public class DetailActivity extends AppCompatActivity {
     private Target mBgImage;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private FloatingActionButton mfAB;
+    private boolean mUnifiedView;
 
     public static void launchInstance(Context context,
                                       long rowId,
@@ -105,7 +106,6 @@ public class DetailActivity extends AppCompatActivity {
         actionBar.setSubtitle(mProductUpc);
 
         mBgImage = new Target() {
-
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 setupActionBarBackground(bitmap);
@@ -124,15 +124,32 @@ public class DetailActivity extends AppCompatActivity {
 
         Picasso.with(this).load(mImage).into(mBgImage);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mUnifiedView = findViewById(R.id.unified_detail) != null;
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+        if (mUnifiedView) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_description_container,
+                            DetailDescriptionFragment.newInstance(mRowId, mProductName, mProductUpc))
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_ingredients_container,
+                            DetailIngredientsFragment.newInstance(mRowId, mProductName, mProductUpc))
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_nutrition_container,
+                            DetailNutritionFragment.newInstance(mRowId, mProductName, mProductUpc))
+                    .commit();
+        } else {
+            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+            // Set up the ViewPager with the sections adapter.
+            mViewPager = (ViewPager) findViewById(R.id.container);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setOffscreenPageLimit(3);
+
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(mViewPager);
+        }
 
         mfAB = (FloatingActionButton) findViewById(R.id.fab);
         mfAB.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +159,7 @@ public class DetailActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
 
     }
 

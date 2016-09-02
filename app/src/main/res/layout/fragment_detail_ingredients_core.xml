@@ -136,8 +136,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/additives"
-        app:srcCompat="@drawable/cast_album_art_placeholder" />
+        app:layout_constraintTop_toBottomOf="@+id/additives" />
 
     <ProgressBar
         android:id="@+id/labelPhotoProgressBar"
