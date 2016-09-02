@@ -360,19 +360,25 @@ public class MainActivity
             viewHolder.mProductId.setText(productUpc);
             viewHolder.mName.setText(productName);
             viewHolder.posterProgressView.setVisibility(View.VISIBLE);
-            Picasso.with(mContext)
-                    .load(thumb)
-                    .into(viewHolder.posterImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            viewHolder.posterProgressView.setVisibility(View.GONE);
-                        }
-                        @Override
-                        public void onError() {
-                            viewHolder.posterImageView.setImageResource(R.mipmap.ic_poster_placeholder);
-                            viewHolder.posterProgressView.setVisibility(View.GONE);
-                        }
-                    });
+            if (thumb != null) {
+                Picasso.with(mContext)
+                        .load(thumb)
+                        .into(viewHolder.posterImageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                viewHolder.posterProgressView.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+                                viewHolder.posterImageView.setImageResource(R.mipmap.ic_poster_placeholder);
+                                viewHolder.posterProgressView.setVisibility(View.GONE);
+                            }
+                        });
+            } else {
+                viewHolder.posterImageView.setImageResource(R.mipmap.ic_poster_placeholder);
+                viewHolder.posterProgressView.setVisibility(View.GONE);
+            }
 
             final long rowId = cursor.getLong(ID);
 

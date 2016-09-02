@@ -155,19 +155,25 @@ public class DetailIngredientsFragment extends Fragment implements LoaderManager
         labelPhoto.setAdjustViewBounds(true);
         labelPhoto.setPadding(4, 4, 4, 4);
         labelPhotoProgressBar.setVisibility(View.VISIBLE);
-        Picasso.with(mContext)
-                .load(data.getString(INGREDIENTSIMAGE))
-                .into(labelPhoto, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        labelPhotoProgressBar.setVisibility(View.GONE);
-                    }
-                    @Override
-                    public void onError() {
-                        labelPhoto.setImageResource(R.mipmap.ic_poster_placeholder);
-                        labelPhotoProgressBar.setVisibility(View.GONE);
-                    }
-                });
+        String photoUrl = data.getString(INGREDIENTSIMAGE);
+        if (photoUrl != null) {
+            Picasso.with(mContext)
+                    .load(data.getString(INGREDIENTSIMAGE))
+                    .into(labelPhoto, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            labelPhotoProgressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            labelPhoto.setImageResource(R.mipmap.ic_poster_placeholder);
+                            labelPhotoProgressBar.setVisibility(View.GONE);
+                        }
+                    });
+        } else {
+            labelPhotoProgressBar.setVisibility(View.GONE);
+        }
 
         ingredientsView.setText(delineateAllergens(data.getString(INGREDIENTS)),
                 TextView.BufferType.SPANNABLE);
