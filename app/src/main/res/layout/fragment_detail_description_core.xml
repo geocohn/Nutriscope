@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/text_margin"
+    android:layout_marginBottom="@dimen/text_margin"
+    android:layout_marginEnd="@dimen/text_margin"
+    android:layout_marginLeft="@dimen/text_margin"
+    android:layout_marginRight="@dimen/text_margin"
+    android:layout_marginStart="@dimen/text_margin"
+    android:layout_marginTop="@dimen/text_margin"
+    tools:context="com.creationgroundmedia.nutriscope.detail.DetailDescriptionFragment">
+
+    <TextView
+        android:id="@+id/CategoriesLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:text="Categories"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/categories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/CategoriesLabel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CategoriesLabel"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/labelsLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:text="Labels, certifications, awards"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/categories"
+        app:layout_constraintRight_toRightOf="@+id/categories"
+        app:layout_constraintTop_toBottomOf="@+id/categories"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/labels"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/labelsLabel"
+        app:layout_constraintRight_toRightOf="@+id/labelsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/labelsLabel"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/brandsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Brands:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@+id/labels"
+        app:layout_constraintTop_toBottomOf="@+id/labels" />
+
+    <TextView
+        android:id="@+id/brands"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/brandsLabel"
+        app:layout_constraintLeft_toRightOf="@+id/brandsLabel"
+        app:layout_constraintTop_toTopOf="@+id/brandsLabel" />
+
+    <TextView
+        android:id="@+id/storesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stores:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@+id/brandsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/brandsLabel" />
+
+    <TextView
+        android:id="@+id/stores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/storesLabel"
+        app:layout_constraintLeft_toRightOf="@+id/storesLabel"
+        app:layout_constraintTop_toBottomOf="@+id/brandsLabel"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/cityLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="City, State, Country purchased"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/storesLabel"
+        app:layout_constraintTop_toBottomOf="@+id/stores"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/cityLabel"
+        app:layout_constraintTop_toBottomOf="@+id/cityLabel"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/quantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Quantity:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@+id/city"
+        app:layout_constraintTop_toBottomOf="@+id/city"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/quantityLabel"
+        app:layout_constraintLeft_toRightOf="@+id/quantityLabel"
+        app:layout_constraintTop_toTopOf="@+id/quantityLabel"
+        tools:layout_constraintLeft_creator="1" />
+
+    <TextView
+        android:id="@+id/packagingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Packaging:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quantityLabel" />
+
+    <TextView
+        android:id="@+id/packaging"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/packagingLabel"
+        app:layout_constraintLeft_toRightOf="@+id/packagingLabel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/packagingLabel" />
+</android.support.constraint.ConstraintLayout>

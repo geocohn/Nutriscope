@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/text_margin"
+    android:layout_marginBottom="@dimen/text_margin"
+    android:layout_marginEnd="@dimen/text_margin"
+    android:layout_marginLeft="@dimen/text_margin"
+    android:layout_marginRight="@dimen/text_margin"
+    android:layout_marginStart="@dimen/text_margin"
+    android:layout_marginTop="@dimen/text_margin"
+    tools:context="com.creationgroundmedia.nutriscope.detail.DetailIngredientsFragment">
+
+    <TextView
+        android:id="@+id/NutritionLevelsLabel"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:text="Nutrition levels for 100g"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fatIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NutritionLevelsLabel"
+        app:srcCompat="@drawable/ic_circle_24dp" />
+
+    <TextView
+        android:id="@+id/fatLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toRightOf="@+id/fatIndicator"
+        app:layout_constraintTop_toTopOf="@+id/fatIndicator" />
+
+    <ImageView
+        android:id="@+id/satFatIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fatIndicator"
+        app:srcCompat="@drawable/ic_circle_24dp" />
+
+    <TextView
+        android:id="@+id/satFatLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/fatLevel"
+        app:layout_constraintTop_toBottomOf="@+id/fatIndicator" />
+
+    <ImageView
+        android:id="@+id/sugarsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/satFatIndicator"
+        app:srcCompat="@drawable/ic_circle_24dp" />
+
+    <TextView
+        android:id="@+id/sugarsLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/satFatLevel"
+        app:layout_constraintTop_toTopOf="@+id/sugarsIndicator" />
+
+    <ImageView
+        android:id="@+id/saltIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sugarsIndicator"
+        app:srcCompat="@drawable/ic_circle_24dp" />
+
+    <TextView
+        android:id="@+id/saltLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/sugarsLevel"
+        app:layout_constraintTop_toTopOf="@+id/saltIndicator" />
+
+    <TextView
+        android:id="@+id/energyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Energy"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saltIndicator" />
+
+    <TextView
+        android:id="@+id/energyJoules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/energyLabel" />
+
+    <TextView
+        android:id="@+id/fatLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Fat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/energyLabel" />
+
+    <TextView
+        android:id="@+id/totalFat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/fatLabel" />
+
+    <TextView
+        android:id="@+id/satFatLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="– Saturated fat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fatLabel" />
+
+    <TextView
+        android:id="@+id/satFat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/satFatLabel" />
+
+    <TextView
+        android:id="@+id/carbLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Carbohydrate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/satFatLabel" />
+
+    <TextView
+        android:id="@+id/carb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/carbLabel" />
+
+    <TextView
+        android:id="@+id/sugarsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="– Sugars"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carbLabel" />
+
+    <TextView
+        android:id="@+id/sugars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/sugarsLabel" />
+
+    <TextView
+        android:id="@+id/proteinsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Proteins"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sugarsLabel" />
+
+    <TextView
+        android:id="@+id/proteins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/proteinsLabel" />
+
+    <TextView
+        android:id="@+id/saltLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Salt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/proteinsLabel" />
+
+    <TextView
+        android:id="@+id/salt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/saltLabel" />
+
+    <TextView
+        android:id="@+id/sodiumLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="– Sodium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@+id/saltLabel"
+        app:layout_constraintTop_toBottomOf="@+id/saltLabel" />
+
+    <TextView
+        android:id="@+id/sodium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/sodiumLabel" />
+
+    <TextView
+        android:id="@+id/fiberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Fiber"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sodiumLabel" />
+
+    <TextView
+        android:id="@+id/fiber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/energyJoules"
+        app:layout_constraintTop_toTopOf="@+id/fiberLabel" />
+
+</android.support.constraint.ConstraintLayout>
