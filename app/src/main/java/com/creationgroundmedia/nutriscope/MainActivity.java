@@ -60,7 +60,7 @@ public class MainActivity
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_BARCODE_CAPTURE = 9001;
-
+    private static final String SELECTED_POSITION = "selectedPosition";
 
     private Context mContext;
     private ProgressBar mMainProgressBar;
@@ -72,12 +72,19 @@ public class MainActivity
     private String mBarcodeValue;
     private MenuItem mSearchMenu;
     private Uri mSearchUri = NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI;
+    private int mSelectedPosition;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+
+        Log.d(LOG_TAG, "onCreate saveInstanceState = " + savedInstanceState);
+        if (savedInstanceState != null) {
+            mSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
+            Log.d(LOG_TAG, "restoring selected position to " + mSelectedPosition);
+        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -252,10 +259,17 @@ public class MainActivity
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new AutofitGridLayoutManager(this, 1000));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(new SimpleProductCursorRecyclerViewAdapter(this, null));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SELECTED_POSITION, mSelectedPosition);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -282,6 +296,8 @@ public class MainActivity
         SimpleProductCursorRecyclerViewAdapter adapter =
                 (SimpleProductCursorRecyclerViewAdapter) mRecyclerView.getAdapter();
         adapter.changeCursor(data);
+        Log.d(LOG_TAG, "onLoadFinished, smooth scroll to " + mSelectedPosition);
+        mRecyclerView.smoothScrollToPosition(mSelectedPosition);
     }
 
     @Override
@@ -364,6 +380,8 @@ public class MainActivity
                 @Override
                 public void onClick(View view) {
                     Log.d(LOG_TAG, "Clicked item " + rowId);
+                    mSelectedPosition = viewHolder.getLayoutPosition();
+                    Log.d(LOG_TAG, "mSelectedPosition set to " + mSelectedPosition);
                     DetailActivity.launchInstance(
                             view.getContext(), rowId, productName, productUpc, productImage);
                 }

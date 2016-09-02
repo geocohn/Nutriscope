@@ -145,6 +145,12 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     private void setupActionBarBackground(Bitmap bitmap) {
         BitmapDrawable background =
                 new BitmapDrawable(getApplicationContext().getResources(), bitmap);
