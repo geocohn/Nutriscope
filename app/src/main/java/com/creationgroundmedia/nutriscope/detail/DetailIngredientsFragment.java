@@ -167,7 +167,7 @@ public class DetailIngredientsFragment extends Fragment implements LoaderManager
 
                         @Override
                         public void onError() {
-                            labelPhoto.setImageResource(R.mipmap.ic_poster_placeholder);
+                            labelPhoto.setImageResource(R.drawable.ic_open_food_facts_logo);
                             labelPhotoProgressBar.setVisibility(View.GONE);
                         }
                     });

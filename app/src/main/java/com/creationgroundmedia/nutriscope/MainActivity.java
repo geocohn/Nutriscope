@@ -371,12 +371,12 @@ public class MainActivity
 
                             @Override
                             public void onError() {
-                                viewHolder.posterImageView.setImageResource(R.mipmap.ic_poster_placeholder);
+                                viewHolder.posterImageView.setImageResource(R.drawable.ic_open_food_facts_logo);
                                 viewHolder.posterProgressView.setVisibility(View.GONE);
                             }
                         });
             } else {
-                viewHolder.posterImageView.setImageResource(R.mipmap.ic_poster_placeholder);
+                viewHolder.posterImageView.setImageResource(R.drawable.ic_open_food_facts_logo);
                 viewHolder.posterProgressView.setVisibility(View.GONE);
             }
 
