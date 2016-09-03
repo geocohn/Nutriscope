@@ -126,6 +126,7 @@ public class MainActivity
                 Log.d(LOG_TAG, "onQueryTextSubmit(" + query + ")");
                 SearchService.setApiStatus(mContext, SearchService.API_STATUS_SEARCHING);
                 updateScreenStatus();
+                mSelectedPosition = 0;
                 if (looksLikeUpc(query)) {
                     setupQueryUri(NutriscopeContract.ProductsEntry.UPCSEARCH_URI);
                     SearchService.startActionUpcSearch(mContext, query);
