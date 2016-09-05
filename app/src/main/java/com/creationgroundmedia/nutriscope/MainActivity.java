@@ -89,6 +89,8 @@ public class MainActivity
     private String mBarcodeValue;
     private String mSortOrder = SORT_NAME;
     private MenuItem mSearchMenu;
+    private MenuItem mSortMenu;
+    private MenuItem mScanMenu;
     private Uri mSearchUri = NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI;
     private int mSelectedPosition;
 
@@ -132,7 +134,6 @@ public class MainActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // todo: implement sorting spinner
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -168,14 +169,14 @@ public class MainActivity
             }
         });
 
-        menu.findItem(R.id.menu_scan)
+        mScanMenu = menu.findItem(R.id.menu_scan)
                 .setVisible(
                         CameraSource.getIdForRequestedCamera(CameraSource.CAMERA_FACING_BACK)
                                 != -1);
 
 
-        MenuItem item = menu.findItem(R.id.action_sorting_spinner);
-        Spinner sortingSpinner = (Spinner) MenuItemCompat.getActionView(item);
+        mSortMenu = menu.findItem(R.id.action_sorting_spinner);
+        Spinner sortingSpinner = (Spinner) MenuItemCompat.getActionView(mSortMenu);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.sorting_modes, R.layout.spinner_item);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
@@ -186,6 +187,7 @@ public class MainActivity
                 mSortOrder = sortOrders[position];
                 mCursorLoader = getSupportLoaderManager().restartLoader(URL_LOADER, null, MainActivity.this);
                 mRecyclerView.getAdapter().notifyDataSetChanged();
+                mSortMenu.collapseActionView();
             }
 
             @Override
@@ -223,6 +225,21 @@ public class MainActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
+        /**
+         * Make sure menu actions don't stack up in the action bar
+         */
+        if (item == mScanMenu) {
+            mSearchMenu.collapseActionView();
+            mSortMenu.collapseActionView();
+        } else if (item == mSearchMenu) {
+            mScanMenu.collapseActionView();
+            mSortMenu.collapseActionView();
+        } else if (item == mSortMenu) {
+            mScanMenu.collapseActionView();
+            mSearchMenu.collapseActionView();
+        }
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
