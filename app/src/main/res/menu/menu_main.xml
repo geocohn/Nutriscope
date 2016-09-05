@@ -2,15 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.creationgroundmedia.nutriscope.MainActivity">
+    <item
+        android:id="@+id/action_sorting_spinner"
+        android:title="@string/sorting_order"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always|collapseActionView"
+        android:icon="@drawable/ic_sort_white_24dp" />
     <item android:id="@+id/menu_scan"
         android:title="@string/scan_title"
         android:icon="@drawable/barcode_scan"
         android:onClick="onScanClicked"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="always|collapseActionView" />
     <item android:id="@+id/menu_search"
         android:title="@string/search_title"
         android:icon="@drawable/ic_search"
-        app:showAsAction="collapseActionView|ifRoom"
+        app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
         android:id="@+id/action_settings"

@@ -1,5 +1,9 @@
 package com.creationgroundmedia.nutriscope;
 
+// todo: copyright all files
+// todo: comment all files
+// todo: implement paid and free flavors
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,9 +29,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
@@ -58,6 +66,15 @@ public class MainActivity
     private static final int NAME = 3;
     private static final int PRODUCTID = 4;
 
+    // The following must correspond with the sorting_modes string array resource.
+    private static final String SORT_NAME =  NutriscopeContract.ProductsEntry.COLUMN_NAME + " COLLATE NOCASE ASC";
+    private static final String SORT_UPC =  NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID + " ASC";
+
+    private static final String[] sortOrders = {
+            SORT_NAME,
+            SORT_UPC
+    };
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String SELECTED_POSITION = "selectedPosition";
@@ -70,6 +87,7 @@ public class MainActivity
     private Loader<Cursor> mCursorLoader;
     private String mBarcodeStatus;
     private String mBarcodeValue;
+    private String mSortOrder = SORT_NAME;
     private MenuItem mSearchMenu;
     private Uri mSearchUri = NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI;
     private int mSelectedPosition;
@@ -114,6 +132,7 @@ public class MainActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // todo: implement sorting spinner
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -123,6 +142,7 @@ public class MainActivity
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // todo: implement stickiness in query string
                 Log.d(LOG_TAG, "onQueryTextSubmit(" + query + ")");
                 SearchService.setApiStatus(mContext, SearchService.API_STATUS_SEARCHING);
                 updateScreenStatus();
@@ -152,6 +172,28 @@ public class MainActivity
                 .setVisible(
                         CameraSource.getIdForRequestedCamera(CameraSource.CAMERA_FACING_BACK)
                                 != -1);
+
+
+        MenuItem item = menu.findItem(R.id.action_sorting_spinner);
+        Spinner sortingSpinner = (Spinner) MenuItemCompat.getActionView(item);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.sorting_modes, R.layout.spinner_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
+        sortingSpinner.setAdapter(spinnerAdapter);
+        sortingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mSortOrder = sortOrders[position];
+                mCursorLoader = getSupportLoaderManager().restartLoader(URL_LOADER, null, MainActivity.this);
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
 
         return true;
     }
@@ -198,7 +240,7 @@ public class MainActivity
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
             intent.putExtra(BarcodeCaptureActivity.AutoFocus, getAutoFocus());
             intent.putExtra(BarcodeCaptureActivity.UseFlash, getUseFlash());
-
+// todo: find out why the first scan crashes
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
         }
     }
@@ -283,7 +325,7 @@ public class MainActivity
                         PROJECTION,                             // Projection to return
                         null,
                         null,                                   // No selection arguments
-                        NutriscopeContract.ProductsEntry.COLUMN_NAME + " COLLATE NOCASE ASC"
+                        mSortOrder
                 );
             default:
                 // An invalid id was passed in
