@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
@@ -41,6 +42,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -59,6 +62,11 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+// TODO: add a custom theme
+// TODO: make the recyclerview items appear gracefully
+// TODO: use ConstraintView for recyclerview items
+// TODO: do something with the fabs
+// TODO: Organize detail fragment view container margins instead of having them on each item
 public class MainActivity
         extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -105,6 +113,7 @@ public class MainActivity
     private MenuItem mScanMenu;
     private Uri mSearchUri = NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI;
     private int mSelectedPosition;
+    private int mLastPosition;
 
 
     @Override
@@ -425,6 +434,15 @@ public class MainActivity
 
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor) {
+            // set up the animation per the xml files
+            int position = cursor.getPosition();
+            Animation animation = AnimationUtils.loadAnimation(mContext,
+                    (position > mLastPosition) ? R.anim.up_from_bottom
+                            : R.anim.down_from_top);
+            viewHolder.itemView.startAnimation(animation);
+            mLastPosition = position;
+
+
             final String productUpc = cursor.getString(PRODUCTID);
             final String productName = cursor.getString(NAME);
             final String productImage = cursor.getString(IMAGE);
