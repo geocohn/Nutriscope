@@ -62,11 +62,18 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-// TODO: add a custom theme
-// TODO: make the recyclerview items appear gracefully
-// TODO: use ConstraintView for recyclerview items
 // TODO: do something with the fabs
 // TODO: Organize detail fragment view container margins instead of having them on each item
+// TODO: Rubric item App includes support for accessibility. That includes content descriptions, navigation using a D-pad, and, if applicable, non-audio versions of audio cues.
+// TODO: Rubric item App keeps all strings in a strings.xml file and enables RTL layout switching on all layouts.
+// TODO: Rubric item App provides a widget to provide relevant information to the user on the home screen.
+// TODO: Rubric item App integrates two or more Google services. Google service integrations can be a part of Google Play Services or Firebase.
+// TODO: Rubric item If Admob is used, the app displays test ads.
+// TODO: Rubric item If Analytics is used, the app creates only one analytics instance.
+// TODO: Rubric item App uses standard and simple transitions between activities.
+// TODO: Rubric item App builds and deploys using the installRelease Gradle task.
+// TODO: Rubric item App is equipped with a signing configuration, and the keystore and passwords are included in the repository. Keystore is referred to by a relative path.
+
 public class MainActivity
         extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -131,15 +138,6 @@ public class MainActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setLogo(R.mipmap.ic_launcher);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         SearchService.resetApiStatus(mContext);
 
