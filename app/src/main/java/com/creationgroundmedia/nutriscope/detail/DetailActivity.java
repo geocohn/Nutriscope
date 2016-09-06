@@ -170,12 +170,20 @@ public class DetailActivity extends AppCompatActivity {
         mfAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                share(mProductName, mProductUpc);
             }
         });
 
 
+    }
+
+    private void share(String productName, String productUpc) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "http://world.openfoodfacts.org/product/" + productUpc);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Open Food Facts: " + productName);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Share this to..."));
     }
 
     @Override
