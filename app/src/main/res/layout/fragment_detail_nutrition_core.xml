@@ -37,7 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:text="Nutrition levels for 100g"
+        android:text="@string/label_nutrition_levels_for_100g"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NutritionLevelsLabel"
-        app:srcCompat="@drawable/ic_circle_24dp" />
+        app:srcCompat="@drawable/ic_circle_24dp"
+        android:contentDescription="@string/description_fat_level_indicator" />
 
     <TextView
         android:id="@+id/fatLevel"
@@ -71,7 +72,8 @@
         android:layout_marginStart="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fatIndicator"
-        app:srcCompat="@drawable/ic_circle_24dp" />
+        app:srcCompat="@drawable/ic_circle_24dp"
+        android:contentDescription="@string/description_saturated_fat_level_indicator" />
 
     <TextView
         android:id="@+id/satFatLevel"
@@ -89,7 +91,8 @@
         android:layout_marginStart="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/satFatIndicator"
-        app:srcCompat="@drawable/ic_circle_24dp" />
+        app:srcCompat="@drawable/ic_circle_24dp"
+        android:contentDescription="@string/description_sugar_level_indicator" />
 
     <TextView
         android:id="@+id/sugarsLevel"
@@ -124,7 +127,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Energy"
+        android:text="@string/label_energy"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/saltIndicator" />
@@ -145,7 +148,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Fat"
+        android:text="@string/label_fat"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/energyLabel" />
@@ -163,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="– Saturated fat"
+        android:text="@string/label_saturated_fat"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fatLabel" />
@@ -182,7 +185,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Carbohydrate"
+        android:text="@string/label_carbohydrate"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/satFatLabel" />
@@ -200,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="– Sugars"
+        android:text="@string/label_sugars"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/carbLabel" />
@@ -219,7 +222,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Proteins"
+        android:text="@string/label_proteins"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sugarsLabel" />
@@ -238,7 +241,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Salt"
+        android:text="@string/label_salt"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/proteinsLabel" />
@@ -254,7 +257,7 @@
         android:id="@+id/sodiumLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="– Sodium"
+        android:text="@string/label_sodium"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="@+id/saltLabel"
         app:layout_constraintTop_toBottomOf="@+id/saltLabel" />
@@ -273,7 +276,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Fiber"
+        android:text="@string/label_fiber"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sodiumLabel" />

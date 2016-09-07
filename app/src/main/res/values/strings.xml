@@ -47,6 +47,34 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="sorting_order">Sorting order</string>
+    <string name="share_message">Share this to...</string>
+    <string name="tab_name_description">DESCRIPTION</string>
+    <string name="tab_name_ingredients">INGREDIENTS</string>
+    <string name="tab_name_nutrition">NUTRITION</string>
+    <string name="label_categories">Categories</string>
+    <string name="label_labels_certifications_awards">Labels, certifications, awards</string>
+    <string name="label_brands">Brands:</string>
+    <string name="label_stores">Stores:</string>
+    <string name="label_city_state_country_purchased">City, State, Country purchased</string>
+    <string name="label_quantity">Quantity:</string>
+    <string name="label_packaging">Packaging:</string>
+    <string name="label_ingredients">Ingredients</string>
+    <string name="label_possible_allergens">Possible allergens</string>
+    <string name="label_traces">Traces</string>
+    <string name="label_additives">Additives:</string>
+    <string name="label_nutrition_levels_for_100g">Nutrition levels for 100g</string>
+    <string name="label_energy">Energy</string>
+    <string name="label_fat">Fat</string>
+    <string name="label_saturated_fat">– Saturated fat</string>
+    <string name="label_carbohydrate">Carbohydrate</string>
+    <string name="label_sugars">– Sugars</string>
+    <string name="label_proteins">Proteins</string>
+    <string name="label_salt">Salt</string>
+    <string name="label_sodium">– Sodium</string>
+    <string name="label_fiber">Fiber</string>
+    <string name="description_fat_level_indicator">Fat level indicator</string>
+    <string name="description_saturated_fat_level_indicator">Saturated fat level indicator</string>
+    <string name="description_sugar_level_indicator">Sugar level indicator</string>
     <string-array name="sorting_modes">
         <item>By name</item>
         <item>By UPC</item>

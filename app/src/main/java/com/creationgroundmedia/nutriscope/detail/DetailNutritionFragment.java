@@ -99,7 +99,7 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
      * @param rowId The Id of the content provider entry
      * @param name The product name
      * @param upc The product UPC
-     * @return A new instance of fragment DetailIngredientsFragment.
+     * @return A new instance of fragment DetailNutritionFragment.
      */
     public static DetailNutritionFragment newInstance(
             long rowId, String name, String upc) {

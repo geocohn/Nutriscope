@@ -24,9 +24,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -62,7 +59,6 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-// TODO: do something with the fabs
 // TODO: Organize detail fragment view container margins instead of having them on each item
 // TODO: Rubric item App includes support for accessibility. That includes content descriptions, navigation using a D-pad, and, if applicable, non-audio versions of audio cues.
 // TODO: Rubric item App keeps all strings in a strings.xml file and enables RTL layout switching on all layouts.

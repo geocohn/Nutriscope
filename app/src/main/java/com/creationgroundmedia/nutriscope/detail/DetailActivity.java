@@ -183,7 +183,7 @@ public class DetailActivity extends AppCompatActivity {
         sendIntent.putExtra(Intent.EXTRA_TEXT, "http://world.openfoodfacts.org/product/" + productUpc);
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Open Food Facts: " + productName);
         sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, "Share this to..."));
+        startActivity(Intent.createChooser(sendIntent, getString(R.string.share_message)));
     }
 
     @Override
@@ -318,11 +318,11 @@ public class DetailActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "DESCRIPTION";
+                    return getString(R.string.tab_name_description);
                 case 1:
-                    return "INGREDIENTS";
+                    return getString(R.string.tab_name_ingredients);
                 case 2:
-                    return "NUTRITION";
+                    return getString(R.string.tab_name_nutrition);
             }
             return null;
         }

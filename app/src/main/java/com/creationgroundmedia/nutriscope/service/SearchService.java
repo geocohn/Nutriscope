@@ -34,6 +34,8 @@ import com.creationgroundmedia.nutriscope.api.UpcSearch;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 import com.creationgroundmedia.nutriscope.pojos.ApiSearchResult;
 import com.creationgroundmedia.nutriscope.pojos.Ingredients;
+import com.creationgroundmedia.nutriscope.pojos.NutrientLevels;
+import com.creationgroundmedia.nutriscope.pojos.Nutriments;
 import com.creationgroundmedia.nutriscope.pojos.Product;
 
 import java.lang.annotation.Retention;
@@ -332,9 +334,19 @@ public class SearchService extends IntentService {
 
     private void loadProvider(Uri uri, ApiSearchResult searchResult) {
         int count = Integer.parseInt(searchResult.getCount());
+        Nutriments emptyNutriments = new Nutriments();
+        NutrientLevels emptyNutrientLevels = new NutrientLevels();
         Vector<ContentValues> contentValuesVector = new Vector<>(count);
         List<Product> products = searchResult.getProducts();
         for (Product product : products) {
+            Nutriments nutriments = product.getNutriments();
+            if (nutriments == null) {
+                nutriments = emptyNutriments;
+            }
+            NutrientLevels nutrientLevels = product.getNutrientLevels();
+            if (nutrientLevels == null) {
+                nutrientLevels = emptyNutrientLevels;
+            }
             ContentValues productValues = new ContentValues();
 
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID,
@@ -346,23 +358,23 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_BRANDS,
                     spacesAfterCommas(product.getBrands()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CARBOHYDRATES,
-                    quantityWithUnits(product.getNutriments().getCarbohydrates100g(),
-                            product.getNutriments().getCarbohydratesUnit()));
+                    quantityWithUnits(nutriments.getCarbohydrates100g(),
+                            nutriments.getCarbohydratesUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CATEGORIES,
                     spacesAfterCommas(product.getCategories()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_CITY,
                     String.valueOf(product.getOrigins()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_ENERGY,
-                    quantityWithUnits(product.getNutriments().getEnergy100g(),
-                            product.getNutriments().getEnergyUnit()));
+                    quantityWithUnits(nutriments.getEnergy100g(),
+                            nutriments.getEnergyUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FATLEVEL,
-                    product.getNutrientLevels().getFat());
+                    nutrientLevels.getFat());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FAT,
-                    quantityWithUnits(product.getNutriments().getFat100g(),
-                            product.getNutriments().getFatUnit()));
+                    quantityWithUnits(nutriments.getFat100g(),
+                            nutriments.getFatUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_FIBER,
-                    quantityWithUnits(product.getNutriments().getFiber100g(),
-                            product.getNutriments().getFiberUnit()));
+                    quantityWithUnits(nutriments.getFiber100g(),
+                            nutriments.getFiberUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGE,
                     product.getImageFrontUrl());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_IMAGESMALL,
@@ -380,29 +392,29 @@ public class SearchService extends IntentService {
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PACKAGING,
                     spacesAfterCommas(product.getPackaging()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PROTEINS,
-                    quantityWithUnits(product.getNutriments().getProteins100g(),
-                            product.getNutriments().getProteinsUnit()));
+                    quantityWithUnits(nutriments.getProteins100g(),
+                            nutriments.getProteinsUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_QUANTITY,
                     product.getQuantity());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALT,
-                    quantityWithUnits(product.getNutriments().getSalt100g(), "g"));
+                    quantityWithUnits(nutriments.getSalt100g(), "g"));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SALTLEVEL,
-                    product.getNutrientLevels().getSalt());
+                    nutrientLevels.getSalt());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATS,
-                    quantityWithUnits(product.getNutriments().getSaturatedFat100g(),
-                            product.getNutriments().getSaturatedFatUnit()));
+                    quantityWithUnits(nutriments.getSaturatedFat100g(),
+                            nutriments.getSaturatedFatUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SATURATEDFATSLEVEL,
-                    product.getNutrientLevels().getSaturatedFat());
+                    nutrientLevels.getSaturatedFat());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SODIUM,
-                    quantityWithUnits(limitDigits(product.getNutriments().getSodium100g(), 5),
-                            product.getNutriments().getSodiumUnit()));
+                    quantityWithUnits(limitDigits(nutriments.getSodium100g(), 5),
+                            nutriments.getSodiumUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_STORES,
                     spacesAfterCommas(product.getStores()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARS,
-                    quantityWithUnits(product.getNutriments().getSugars100g(),
-                            product.getNutriments().getSugarsUnit()));
+                    quantityWithUnits(nutriments.getSugars100g(),
+                            nutriments.getSugarsUnit()));
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_SUGARSLEVEL,
-                    product.getNutrientLevels().getSugars());
+                    nutrientLevels.getSugars());
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_TRACES,
                     spacesAfterCommas(product.getTraces()));
 
@@ -442,14 +454,12 @@ public class SearchService extends IntentService {
         /**
          * Sort by rank
          */
-        if (ingredients != null) {
-            Collections.sort(ingredients, new Comparator<Ingredients>() {
-                @Override
-                public int compare(Ingredients t1, Ingredients t2) {
-                    return t1.getRank() - t2.getRank();
-                }
-            });
-        }
+        Collections.sort(ingredients, new Comparator<Ingredients>() {
+            @Override
+            public int compare(Ingredients t1, Ingredients t2) {
+                return t1.getRank() - t2.getRank();
+            }
+        });
         /**
          * Build a comma separated string
          */
