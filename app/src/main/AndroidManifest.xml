@@ -57,7 +57,7 @@
             android:name=".data.NutriscopeProvider"
             android:authorities="com.creationgroundmedia.nutriscope"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
             android:name=".service.SearchService"

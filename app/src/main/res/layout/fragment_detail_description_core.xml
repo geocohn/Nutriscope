@@ -40,6 +40,7 @@
         android:text="@string/label_categories"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -50,8 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:contentDescription="@string/description_categories"
         app:layout_constraintLeft_toLeftOf="@+id/CategoriesLabel"
+        app:layout_constraintStart_toStartOf="@+id/CategoriesLabel"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CategoriesLabel"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -66,7 +70,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="@+id/categories"
+        app:layout_constraintStart_toStartOf="@+id/categories"
         app:layout_constraintRight_toRightOf="@+id/categories"
+        app:layout_constraintEnd_toEndOf="@+id/categories"
         app:layout_constraintTop_toBottomOf="@+id/categories"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -77,8 +83,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:contentDescription="@string/description_labels"
         app:layout_constraintLeft_toLeftOf="@+id/labelsLabel"
         app:layout_constraintRight_toRightOf="@+id/labelsLabel"
+        app:layout_constraintStart_toStartOf="@+id/labelsLabel"
+        app:layout_constraintEnd_toEndOf="@+id/labelsLabel"
         app:layout_constraintTop_toBottomOf="@+id/labelsLabel"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -92,6 +101,7 @@
         android:text="@string/label_brands"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="@+id/labels"
+        app:layout_constraintStart_toStartOf="@+id/labels"
         app:layout_constraintTop_toBottomOf="@+id/labels" />
 
     <TextView
@@ -100,8 +110,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="@string/description_brands"
         app:layout_constraintBottom_toBottomOf="@+id/brandsLabel"
         app:layout_constraintLeft_toRightOf="@+id/brandsLabel"
+        app:layout_constraintStart_toEndOf="@+id/brandsLabel"
         app:layout_constraintTop_toTopOf="@+id/brandsLabel" />
 
     <TextView
@@ -111,6 +123,7 @@
         android:text="@string/label_stores"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="@+id/brandsLabel"
+        app:layout_constraintStart_toStartOf="@+id/brandsLabel"
         app:layout_constraintTop_toBottomOf="@+id/brandsLabel" />
 
     <TextView
@@ -119,8 +132,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="@string/description_stores"
         app:layout_constraintBottom_toBottomOf="@+id/storesLabel"
         app:layout_constraintLeft_toRightOf="@+id/storesLabel"
+        app:layout_constraintStart_toEndOf="@+id/storesLabel"
         app:layout_constraintTop_toBottomOf="@+id/brandsLabel"
         tools:layout_constraintTop_creator="1" />
 
@@ -133,6 +148,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="@+id/storesLabel"
+        app:layout_constraintStart_toStartOf="@+id/storesLabel"
         app:layout_constraintTop_toBottomOf="@+id/stores"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1" />
@@ -141,7 +157,9 @@
         android:id="@+id/city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/description_city_state_country_purchased"
         app:layout_constraintLeft_toLeftOf="@+id/cityLabel"
+        app:layout_constraintStart_toStartOf="@+id/cityLabel"
         app:layout_constraintTop_toBottomOf="@+id/cityLabel"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -154,6 +172,7 @@
         android:text="@string/label_quantity"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="@+id/city"
+        app:layout_constraintStart_toStartOf="@+id/city"
         app:layout_constraintTop_toBottomOf="@+id/city"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -164,8 +183,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="@string/description_quantity"
         app:layout_constraintBottom_toBottomOf="@+id/quantityLabel"
         app:layout_constraintLeft_toRightOf="@+id/quantityLabel"
+        app:layout_constraintStart_toEndOf="@+id/quantityLabel"
         app:layout_constraintTop_toTopOf="@+id/quantityLabel"
         tools:layout_constraintLeft_creator="1" />
 
@@ -179,6 +200,7 @@
         android:text="@string/label_packaging"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quantityLabel" />
 
     <TextView
@@ -189,8 +211,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="@string/description_packaging"
         app:layout_constraintBottom_toBottomOf="@+id/packagingLabel"
         app:layout_constraintLeft_toRightOf="@+id/packagingLabel"
+        app:layout_constraintStart_toEndOf="@+id/packagingLabel"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/packagingLabel" />
 </android.support.constraint.ConstraintLayout>

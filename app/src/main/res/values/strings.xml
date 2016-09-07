@@ -46,8 +46,8 @@
     <string name="pref_useflash_summary">Use the camera flash when scanning UPC barcodes</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="sorting_order">Sorting order</string>
-    <string name="share_message">Share this to...</string>
+    <string name="sorting_order">Sort</string>
+    <string name="share_message">Share this to…</string>
     <string name="tab_name_description">DESCRIPTION</string>
     <string name="tab_name_ingredients">INGREDIENTS</string>
     <string name="tab_name_nutrition">NUTRITION</string>
@@ -75,6 +75,32 @@
     <string name="description_fat_level_indicator">Fat level indicator</string>
     <string name="description_saturated_fat_level_indicator">Saturated fat level indicator</string>
     <string name="description_sugar_level_indicator">Sugar level indicator</string>
+    <string name="description_salt_level_indicator">Salt level indicator</string>
+    <string name="description_categories">Categories</string>
+    <string name="description_labels">Labels</string>
+    <string name="description_brands">Brands</string>
+    <string name="description_stores">Stores</string>
+    <string name="description_city_state_country_purchased">City, state, and country purchased</string>
+    <string name="description_quantity">Quantity</string>
+    <string name="description_packaging">Packaging</string>
+    <string name="description_fat_level">Fat level</string>
+    <string name="description_saturated_fat_level">Saturated fat level</string>
+    <string name="description_sugar_level">Sugar level</string>
+    <string name="description_salt_level">Salt level</string>
+    <string name="description_energy">Energy</string>
+    <string name="description_total_fat">Total fat</string>
+    <string name="description_saturated_fat">Saturated fat</string>
+    <string name="description_carbohydrates">Carbohydrates</string>
+    <string name="description_sugars">Sugars</string>
+    <string name="description_proteins">Proteins</string>
+    <string name="description_salt">Salt</string>
+    <string name="description_sodium">Sodium</string>
+    <string name="description_fiber">Fiber</string>
+    <string name="description_ingredients">Ingredients</string>
+    <string name="description_possible_allergens">Possible allergens</string>
+    <string name="description_traces">Traces</string>
+    <string name="description_additives">Additives</string>
+    <string name="description_photo_of_ingredients_label_on_package">Photo of ingredients label on package</string>
     <string-array name="sorting_modes">
         <item>By name</item>
         <item>By UPC</item>

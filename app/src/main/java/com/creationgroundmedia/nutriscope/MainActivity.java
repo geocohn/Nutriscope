@@ -61,7 +61,6 @@ import com.squareup.picasso.Picasso;
 
 // TODO: Organize detail fragment view container margins instead of having them on each item
 // TODO: Rubric item App includes support for accessibility. That includes content descriptions, navigation using a D-pad, and, if applicable, non-audio versions of audio cues.
-// TODO: Rubric item App keeps all strings in a strings.xml file and enables RTL layout switching on all layouts.
 // TODO: Rubric item App provides a widget to provide relevant information to the user on the home screen.
 // TODO: Rubric item App integrates two or more Google services. Google service integrations can be a part of Google Play Services or Firebase.
 // TODO: Rubric item If Admob is used, the app displays test ads.
@@ -144,7 +143,6 @@ public class MainActivity
         mRecyclerView = (RecyclerView) findViewById(R.id.product_list);
         assert mRecyclerView != null;
         setupRecyclerView(mRecyclerView);
-
     }
 
     @Override
@@ -209,8 +207,6 @@ public class MainActivity
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
 
         return true;
     }
