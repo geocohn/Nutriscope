@@ -17,7 +17,21 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix ".debug"
+        }
     }
+    productFlavors {
+        free {
+            applicationId "com.creationgroundmedia.nutriscope.free"
+            versionName "1.0-free"
+        }
+        paid {
+            applicationId "com.creationgroundmedia.nutriscope.paid"
+            versionName "1.0-paid"
+        }
+    }
+
 }
 
 dependencies {
@@ -29,6 +43,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.android.gms:play-services-vision:9.4.0'
+    freeCompile 'com.google.android.gms:play-services-ads:9.4.0'
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:palette-v7:24.2.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'

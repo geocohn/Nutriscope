@@ -59,12 +59,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-// TODO: Organize detail fragment view container margins instead of having them on each item
-// TODO: Rubric item App includes support for accessibility. That includes content descriptions, navigation using a D-pad, and, if applicable, non-audio versions of audio cues.
 // TODO: Rubric item App provides a widget to provide relevant information to the user on the home screen.
-// TODO: Rubric item App integrates two or more Google services. Google service integrations can be a part of Google Play Services or Firebase.
-// TODO: Rubric item If Admob is used, the app displays test ads.
-// TODO: Rubric item If Analytics is used, the app creates only one analytics instance.
 // TODO: Rubric item App uses standard and simple transitions between activities.
 // TODO: Rubric item App builds and deploys using the installRelease Gradle task.
 // TODO: Rubric item App is equipped with a signing configuration, and the keystore and passwords are included in the repository. Keystore is referred to by a relative path.
@@ -123,7 +118,7 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         mContext = this;
 
-        Log.d(LOG_TAG, "onCreate saveInstanceState = " + savedInstanceState);
+        Log.d(LOG_TAG, "onCreate " + System.currentTimeMillis() + ", saveInstanceState = " + savedInstanceState);
         if (savedInstanceState != null) {
             mSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
             Log.d(LOG_TAG, "restoring selected position to " + mSelectedPosition);
@@ -135,6 +130,8 @@ public class MainActivity
         toolbar.setLogo(R.mipmap.ic_launcher);
 
         SearchService.resetApiStatus(mContext);
+
+        BannerAd.runAd(mContext, findViewById(R.id.banner_ad));
 
         mCursorLoader = getSupportLoaderManager().initLoader(URL_LOADER, null, this);
 
@@ -472,6 +469,14 @@ public class MainActivity
                             view.getContext(), rowId, productName, productUpc, productImage);
                 }
             });
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(ViewHolder holder) {
+            // Prevent problems when fast scrolling due to
+            // the view being reused while the animation is happening
+            holder.itemView.clearAnimation();
+            super.onViewDetachedFromWindow(holder);
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
