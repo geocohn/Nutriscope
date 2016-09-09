@@ -24,7 +24,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 /**
- * Created by geo on 9/8/16.
+ * Created by George Cohn III on 9/8/16.
+ * Show a banner ad in the free version
  */
 public class BannerAd {
     public static void runAd(Context context, View bannerAdView) {

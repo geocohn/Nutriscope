@@ -20,7 +20,8 @@ import android.content.Context;
 import android.view.View;
 
 /**
- * Created by geo on 9/8/16.
+ * Created by George Cohn III on 9/8/16.
+ * stub in the paid version
  */
 public class BannerAd {
     public static void runAd(Context context, View bannerAdView) {
