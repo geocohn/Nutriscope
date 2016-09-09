@@ -62,7 +62,6 @@ import com.squareup.picasso.Picasso;
 // TODO: Rubric item App provides a widget to provide relevant information to the user on the home screen.
 // TODO: Rubric item App uses standard and simple transitions between activities.
 // TODO: Rubric item App builds and deploys using the installRelease Gradle task.
-// TODO: Rubric item App is equipped with a signing configuration, and the keystore and passwords are included in the repository. Keystore is referred to by a relative path.
 
 public class MainActivity
         extends AppCompatActivity
