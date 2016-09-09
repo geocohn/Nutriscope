@@ -20,6 +20,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+/**
+ * Created by George Cohn III on 6/27/16.
+ * Generated from API sample query result
+ * using {@link <a href="http://www.jsonschema2pojo.org/">http://www.jsonschema2pojo.org/</a>}
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiSearchResult {
 

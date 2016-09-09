@@ -23,7 +23,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * Created by geo on 6/27/16.
+ * Created by George Cohn III on 6/27/16.
+ * Framework for an Open Food Facts API simple search request
  */
 
 public class SimpleSearchRetrofit {

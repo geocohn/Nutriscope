@@ -26,6 +26,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Created by George Cohn III on 6/27/16.
+ * Adapted from barcode-reader section of
+ * {@link <a href="https://github.com/googlesamples/android-vision">Android Vision API Samples</a>}
+ */
+
+/**
  * A view which renders a series of custom graphics to be overlayed on top of an associated preview
  * (i.e., the camera preview).  The creator can add graphics objects, update the objects, and remove
  * them, triggering the appropriate drawing and invalidation within the view.<p>

@@ -23,9 +23,9 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +36,7 @@ import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 
 /**
+ * Created by George Cohn III on 6/27/16.
  * A simple {@link Fragment} subclass.
  * Use the {@link DetailNutritionFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -164,7 +165,7 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
+//        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
         if (data == null) {
             return;
         }
@@ -188,19 +189,29 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
         TextView sodium = (TextView) mView.findViewById(R.id.sodium);
         TextView fiber = (TextView) mView.findViewById(R.id.fiber);
 
+        fatLevelIndicator.setColorFilter(getColorForLevel(data.getString(FATLEVEL)),
+                PorterDuff.Mode.SRC_ATOP);
+        fatLevelText.setText(getTextForLevel(data.getString(FAT),
+                getString(R.string.label_fat),
+                data.getString(FATLEVEL)));
 
-        fatLevelIndicator.setColorFilter(
-                getColorForLevel(data.getString(FATLEVEL)), PorterDuff.Mode.SRC_ATOP);
-        fatLevelText.setText(textForLevel(data.getString(FAT), "Fat", data.getString(FATLEVEL)));
-        satFatLevelIndicator.setColorFilter(
-                getColorForLevel(data.getString(SATURATEDFATSLEVEL)), PorterDuff.Mode.SRC_ATOP);
-        satFatLevelText.setText(textForLevel(data.getString(SATURATEDFATS), "Saturated fat", data.getString(SATURATEDFATSLEVEL)));
-        sugarLevelIndicator.setColorFilter(
-                getColorForLevel(data.getString(SUGARSLEVEL)), PorterDuff.Mode.SRC_ATOP);
-        sugarLevelText.setText(textForLevel(data.getString(SUGARS), "Sugars", data.getString(SUGARSLEVEL)));
-        saltLevelIndicator.setColorFilter(
-                getColorForLevel(data.getString(SALTLEVEL)), PorterDuff.Mode.SRC_ATOP);
-        saltLevelText.setText(textForLevel(data.getString(SALT), "Salt", data.getString(SALTLEVEL)));
+        satFatLevelIndicator.setColorFilter(getColorForLevel(data.getString(SATURATEDFATSLEVEL)),
+                PorterDuff.Mode.SRC_ATOP);
+        satFatLevelText.setText(getTextForLevel(data.getString(SATURATEDFATS),
+                getString(R.string.label_saturated_fat),
+                data.getString(SATURATEDFATSLEVEL)));
+
+        sugarLevelIndicator.setColorFilter(getColorForLevel(data.getString(SUGARSLEVEL)),
+                PorterDuff.Mode.SRC_ATOP);
+        sugarLevelText.setText(getTextForLevel(data.getString(SUGARS),
+                getString(R.string.label_sugars),
+                data.getString(SUGARSLEVEL)));
+
+        saltLevelIndicator.setColorFilter(getColorForLevel(data.getString(SALTLEVEL)),
+                PorterDuff.Mode.SRC_ATOP);
+        saltLevelText.setText(getTextForLevel(data.getString(SALT),
+                getString(R.string.label_salt),
+                data.getString(SALTLEVEL)));
 
         energyJoules.setText(data.getString(ENERGY));
         fat.setText(data.getString(FAT));
@@ -213,26 +224,27 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
         fiber.setText(data.getString(FIBER));
     }
 
-    private CharSequence textForLevel(String quantity, String nutrient, String level) {
+    private CharSequence getTextForLevel(String quantity, String nutrient, String level) {
         if (quantity == null || level == null)
-            return String.format("No data found for %s", nutrient);
-        return String.format("%s %s in %s quantity", quantity, nutrient, level);
+            return String.format(getString(R.string.no_data_found_for), nutrient);
+        return String.format(getString(R.string.quantity_nutrient_in_level_qualtity),
+                quantity, nutrient, level);
     }
 
     private int getColorForLevel(String level) {
         if (level != null) {
             if (level.compareToIgnoreCase("low") == 0)
-                return Color.GREEN;
+                return ContextCompat.getColor(mContext, R.color.colorLowLevel);
             if (level.compareToIgnoreCase("moderate") == 0)
-                return Color.YELLOW;
+                return ContextCompat.getColor(mContext, R.color.colorModerateLevel);
             if (level.compareToIgnoreCase("high") == 0)
-                return Color.RED;
+                return ContextCompat.getColor(mContext, R.color.colorHighLevel);
         }
         return Color.WHITE;
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-/* Nothing to be done here*/
+        // Nothing to be done here
     }
 }

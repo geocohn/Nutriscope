@@ -19,6 +19,12 @@ package com.creationgroundmedia.nutriscope.pojos;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Created by George Cohn III on 6/27/16.
+ * Generated from API sample query result
+ * using {@link <a href="http://www.jsonschema2pojo.org/">http://www.jsonschema2pojo.org/</a>}
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Nutriments {
 

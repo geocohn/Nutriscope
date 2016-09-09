@@ -53,6 +53,17 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+/**
+ * Created by George Cohn III on 6/27/16.
+ * Product details are displayed in 3 sections:
+ * 1. DESCRIPTION
+ * 2. INGREDIENTS
+ * 3. NUTRITION
+ * Each section is displayed using a fragment.
+ * For wide screens, all 3 are displayed on a single screen,
+ * otherwise they show in a tabbed ViewPager
+ */
+
 public class DetailActivity extends AppCompatActivity {
 
     /**
@@ -65,7 +76,6 @@ public class DetailActivity extends AppCompatActivity {
      */
 
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
-    private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -107,8 +117,6 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
 
         Bundle extras = getIntent().getExtras();
         mRowId = extras.getLong(NutriscopeContract.ProductsEntry._ID);
@@ -116,10 +124,11 @@ public class DetailActivity extends AppCompatActivity {
         mProductUpc = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID);
         mImage = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_IMAGE);
 
-        Log.d(LOG_TAG, "onCreate(" + mRowId + ", " + mProductName + ", " + mProductUpc + ")");
+//        Log.d(LOG_TAG, "onCreate(" + mRowId + ", " + mProductName + ", " + mProductUpc + ")");
         actionBar.setTitle(mProductName);
         actionBar.setSubtitle(mProductUpc);
 
+        // Display the product image in the action bar
         mBgImage = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -142,6 +151,7 @@ public class DetailActivity extends AppCompatActivity {
         mUnifiedView = findViewById(R.id.unified_detail) != null;
 
         if (mUnifiedView) {
+            // Wide screens can accommodate all 3 fragments
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.detail_description_container,
                             DetailDescriptionFragment.newInstance(mRowId, mProductName, mProductUpc))
@@ -155,7 +165,10 @@ public class DetailActivity extends AppCompatActivity {
                             DetailNutritionFragment.newInstance(mRowId, mProductName, mProductUpc))
                     .commit();
         } else {
-            mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+            // Otherwise we're looking at a tabbed view
+            // Create the adapter that will return a fragment for each of the three
+            // primary sections of the activity.
+            SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
             // Set up the ViewPager with the sections adapter.
             mViewPager = (ViewPager) findViewById(R.id.container);
@@ -173,8 +186,6 @@ public class DetailActivity extends AppCompatActivity {
                 share(mProductName, mProductUpc);
             }
         });
-
-
     }
 
     private void share(String productName, String productUpc) {
@@ -188,11 +199,14 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        // Doing this makes sure the screen back button behavior
+        // is identical to the system back button's
         finish();
         return true;
     }
 
     private void setupActionBarBackground(Bitmap bitmap) {
+        // Make a custom palette for the action bar based on the product image
         BitmapDrawable background =
                 new BitmapDrawable(getApplicationContext().getResources(), bitmap);
         mActionBarBackground.setImageDrawable(background);
@@ -283,7 +297,7 @@ public class DetailActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

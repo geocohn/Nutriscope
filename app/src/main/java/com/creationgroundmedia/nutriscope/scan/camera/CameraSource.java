@@ -48,6 +48,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Created by George Cohn III on 6/27/16.
+ * Adapted from barcode-reader section of
+ * {@link <a href="https://github.com/googlesamples/android-vision">Android Vision API Samples</a>}
+ */
+
 // Note: This requires Google Play Services 8.1 or higher, due to using indirect byte buffers for
 // storing images.
 

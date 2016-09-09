@@ -24,6 +24,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 
+/**
+ * Created by George Cohn III on 7/4/16.
+ * This Content Provider has only 2 purposes:
+ * 1. to support a RecyclerView via CursorLoader
+ * 2. to persist the results of a search between invocations of the app
+ */
+
 public class NutriscopeProvider extends ContentProvider {
     private static final UriMatcher mUriMatcher = buildUriMatcher();
     private static final String LOG_CAT = NutriscopeProvider.class.getSimpleName();
@@ -70,7 +77,7 @@ public class NutriscopeProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int retVal = -1;
 
-        Log.d(LOG_CAT, "delete, uri: " + uri + ", uriMatch: " + mUriMatcher.match(uri));
+//        Log.d(LOG_CAT, "delete, uri: " + uri + ", uriMatch: " + mUriMatcher.match(uri));
 
         switch (mUriMatcher.match(uri)) {
             case PRODUCTS:
@@ -137,7 +144,7 @@ public class NutriscopeProvider extends ContentProvider {
     public int bulkInsert(Uri uri, ContentValues[] values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 
-        Log.d(LOG_CAT, "bulkInsert Uri = " + uri + "( " + mUriMatcher.match(uri) + ")");
+//        Log.d(LOG_CAT, "bulkInsert Uri = " + uri + "( " + mUriMatcher.match(uri) + ")");
         switch (mUriMatcher.match(uri)) {
             case PRODUCTS:
             case PRODUCTSEARCH:
@@ -171,9 +178,10 @@ public class NutriscopeProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Cursor cursor = null;
-        Log.d(LOG_CAT, "query URI: " + uri);
+//        Log.d(LOG_CAT, "query URI: " + uri);
         switch (mUriMatcher.match(uri)) {
             case ROWID: {
+                // A single row is queried for details for a single product
                 long index = NutriscopeContract.ProductsEntry.getProductRowIdFromUri(uri);
                 String[] selectionParam = {String.valueOf(index)};
                 cursor = mOpenHelper.getReadableDatabase().query(
@@ -188,6 +196,8 @@ public class NutriscopeProvider extends ContentProvider {
             }
             case PRODUCTSEARCH:
             case UPCSEARCH: {
+                // In the context of the app, the real search takes place via the
+                // Open Food Facts API, therefore we want all rows
                 cursor = mOpenHelper.getReadableDatabase().query(
                         NutriscopeContract.ProductsEntry.TABLE_NAME,
                         projection,

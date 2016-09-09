@@ -50,6 +50,17 @@ import java.util.concurrent.TimeUnit;
 import static android.text.TextUtils.concat;
 
 /**
+ * Created by George Cohn III on 6/27/16.
+ * Does the search using the
+ * {@link <a href="http://en.wiki.openfoodfacts.org/API">Open Food Facts API</a>}
+ * and loads the result into the Content Provider.
+ * It deletes all rows in the Content Provider first
+ * so that the results consist of exactly the elements from the search.
+ *
+ * It also has code for API/Network status management static methpds
+ */
+
+/**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
  * <p>
@@ -164,6 +175,8 @@ public class SearchService extends IntentService {
     /**
      * Starts this service to perform action ACTION_PRODUCTSEARCH with the given parameters. If
      * the service is already performing a task this action will be queued.
+     * @param context the context of the caller
+     * @param productKey the key for the API's simple search
      *
      * @see IntentService
      */
@@ -171,8 +184,15 @@ public class SearchService extends IntentService {
         startActionProductSearch(context, productKey, 0);
     }
 
+    /**
+     * Starts this service to perform action ACTION_PRODUCTSEARCH with the given parameters. If
+     * the service is already performing a task this action will be queued.
+     * @param context the context of the caller
+     * @param productKey the key for the API's simple search
+     * @param timeout is needed by test modules, so that they don't finish before the results arrive
+     */
     public static void startActionProductSearch(Context context, String productKey, int timeout) {
-        Log.d(LOG_TAG, "startActionProductSearch(context, " + productKey + ") called");
+//        Log.d(LOG_TAG, "startActionProductSearch(context, " + productKey + ") called");
         Intent intent = new Intent(context, SearchService.class);
         intent.setAction(ACTION_PRODUCTSEARCH);
         intent.putExtra(PRODUCT_KEY, productKey);
@@ -192,12 +212,22 @@ public class SearchService extends IntentService {
     /**
      * Starts this service to perform action ACTION_UPCSEARCH with the given parameters. If
      * the service is already performing a task this action will be queued.
+     * @param context the context of the caller
+     * @param upcKey the key for the API's UPC lookup
      *
      * @see IntentService
      */
     public static void startActionUpcSearch(Context context, String upcKey) {
         startActionUpcSearch(context, upcKey, 0);
     }
+
+    /**
+     * Starts this service to perform action ACTION_UPCSEARCH with the given parameters. If
+     * the service is already performing a task this action will be queued.
+     * @param context the context of the caller
+     * @param upcKey the key for the API's UPC lookup
+     * @param timeout is needed by test modules, so that they don't finish before the results arrive
+     */
 
     public static void startActionUpcSearch(Context context, String upcKey, int timeout) {
         Intent intent = new Intent(context, SearchService.class);
@@ -218,10 +248,10 @@ public class SearchService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d(LOG_TAG, "OnHandleIntent called");
+//        Log.d(LOG_TAG, "OnHandleIntent called");
         if (intent != null) {
             final String action = intent.getAction();
-            Log.d(LOG_TAG, "action: " + action);
+//            Log.d(LOG_TAG, "action: " + action);
             if (ACTION_PRODUCTSEARCH.equals(action)) {
                 final String productKey = intent.getStringExtra(PRODUCT_KEY);
                 handleProductSearch(productKey);
@@ -248,11 +278,15 @@ public class SearchService extends IntentService {
         int searchTimeout = Integer.parseInt(getString(R.string.search_timeout));
 
 
-        Log.d(LOG_TAG, "handleProductSearch productUri: " + productUri);
+//        Log.d(LOG_TAG, "handleProductSearch productUri: " + productUri);
 
+        // Clear the Content Provider database
         getContentResolver().delete(productUri, "1", null);
 
         SimpleSearch simpleSearch = new SimpleSearch();
+
+        // results come in as a series of pages of JSON.
+        // Iterate through the pages and load the data into the Content Provider
         page = 1;
         do {
             final CountDownLatch gate = new CountDownLatch(1);
@@ -288,6 +322,10 @@ public class SearchService extends IntentService {
 
 
     private void handleUpcSearch(String upcKey) {
+        // Similar to HandleProductSearch() above, but the API for UPC lookup
+        // doesn't allow the user to specify pages.
+        // Therefore we can only deliver no more than a single page's worth,
+        // even though there might be more, due to wildcard characters ('x') in the search string
         Uri upcSearchUri = NutriscopeContract.ProductsEntry.buildUpcSearchUri(upcKey);
         int searchTimeout = Integer.parseInt(getString(R.string.search_timeout));
 
@@ -332,12 +370,22 @@ public class SearchService extends IntentService {
         }
     }
 
+    /**
+     * @param uri the Content Provider URI, based on the search type and search key
+     * @param searchResult the pojo result of the API call
+     * This is the workhorse of the service. It flattens and manicures the
+     * data provided by the (somewhat) structured pojos.
+     * That allows us to have a simple flat database instead of a complex relational database
+     */
     private void loadProvider(Uri uri, ApiSearchResult searchResult) {
         int count = Integer.parseInt(searchResult.getCount());
+        // Having empty pojos on hand reduces a lot of checking for null inside the loop
         Nutriments emptyNutriments = new Nutriments();
         NutrientLevels emptyNutrientLevels = new NutrientLevels();
+
         Vector<ContentValues> contentValuesVector = new Vector<>(count);
         List<Product> products = searchResult.getProducts();
+
         for (Product product : products) {
             Nutriments nutriments = product.getNutriments();
             if (nutriments == null) {
@@ -347,6 +395,7 @@ public class SearchService extends IntentService {
             if (nutrientLevels == null) {
                 nutrientLevels = emptyNutrientLevels;
             }
+
             ContentValues productValues = new ContentValues();
 
             productValues.put(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID,
@@ -429,6 +478,8 @@ public class SearchService extends IntentService {
         }
     }
 
+    // limitDigits was implemented only because
+    // sodium was sometimes coming in out to several decimal places
     private String limitDigits(String value, int limit) {
         if (value == null || value.length() < limit)
             return value;
@@ -445,6 +496,7 @@ public class SearchService extends IntentService {
         return str;
     }
 
+    // Build an ingredients list string from a list of pojos
     private String commaSeparateIngredients(List<Ingredients> ingredients) {
         String ingredientString = null;
 

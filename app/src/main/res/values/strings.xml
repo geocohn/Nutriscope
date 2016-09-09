@@ -101,6 +101,9 @@
     <string name="description_traces">Traces</string>
     <string name="description_additives">Additives</string>
     <string name="description_photo_of_ingredients_label_on_package">Photo of ingredients label on package</string>
+    <string name="no_data_found_for">No data found for %s</string>
+    <string name="quantity_nutrient_in_level_qualtity">%s %s in %s quantity</string>
+
     <string-array name="sorting_modes">
         <item>By name</item>
         <item>By UPC</item>

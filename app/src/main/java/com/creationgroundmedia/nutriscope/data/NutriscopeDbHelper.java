@@ -23,7 +23,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract.ProductsEntry;
 
 /**
- * Created by geo on 7/4/16.
+ * Created by George Cohn III on 7/4/16.
+ * Build the SQLite database
  */
 
 public class NutriscopeDbHelper extends SQLiteOpenHelper {

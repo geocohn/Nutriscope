@@ -27,7 +27,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
- * Created by geo on 7/4/16.
+ * Created by George Cohn III on 7/4/16.
+ * Wrapper for SimpleSearchRetrofit to run an Open Food Facts UPC lookup parse the JSON
  */
 
 public class UpcSearch {
@@ -51,16 +52,16 @@ public class UpcSearch {
 
         Call<ApiSearchResult> call = service.search(upc + ".json");
 
-        Log.d(LOG_TAG, "HTTP: " + call.request().url());
+//        Log.d(LOG_TAG, "HTTP: " + call.request().url());
 
         call.enqueue(new Callback<ApiSearchResult>() {
             @Override
             public void onResponse(Call<ApiSearchResult> call, Response<ApiSearchResult> response) {
-                Log.d(LOG_TAG, "Response status code: " + response.code());
+//                Log.d(LOG_TAG, "Response status code: " + response.code());
                 if (response.isSuccessful()) {
                     ApiSearchResult result = response.body();
-                    Log.d(LOG_TAG, "Count: " + result.getCount());
-                    Log.d(LOG_TAG, "PageSize: " + result.getPageSize());
+//                    Log.d(LOG_TAG, "Count: " + result.getCount());
+//                    Log.d(LOG_TAG, "PageSize: " + result.getPageSize());
                     sr.result(result);
                 } else {
                     sr.result(null);
@@ -69,8 +70,8 @@ public class UpcSearch {
 
             @Override
             public void onFailure(Call<ApiSearchResult> call, Throwable t) {
-                Log.d(LOG_TAG, "onFailure");
-                Log.e(LOG_TAG, t.getMessage());
+//                Log.d(LOG_TAG, "onFailure");
+//                Log.e(LOG_TAG, t.getMessage());
                 sr.result(null);
             }
         });

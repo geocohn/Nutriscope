@@ -21,7 +21,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 /**
- * Created by geo on 8/25/16.
+ * Created by George Cohn III on 8/25/16.
+ * Simplest SettingsActivity possible
  */
 
 public class SettingsActivity extends PreferenceActivity

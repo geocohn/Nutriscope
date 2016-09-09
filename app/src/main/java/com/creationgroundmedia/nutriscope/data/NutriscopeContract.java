@@ -22,42 +22,43 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * Created by geo on 7/4/16.
+ * Created by George Cohn III on 7/4/16.
+ * Basic Content Provider Contract
  */
 
 public class NutriscopeContract {
 
     // Authority
-    public static final String CONTENT_AUTHORITY = "com.creationgroundmedia.nutriscope";
+    static final String CONTENT_AUTHORITY = "com.creationgroundmedia.nutriscope";
     //Base URI
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     //Paths
-    public static final String PATH_PRODUCTS = "products";
-    public static final String PATH_PRODUCTSEARCH = "productsearch";
-    public static final String PATH_UPCSEARCH = "upcsearch";
-    public static final String PATH_UPC = "upc";
-    public static final String PATH_ROWID = "rowid";
+    static final String PATH_PRODUCTS = "products";
+    static final String PATH_PRODUCTSEARCH = "productsearch";
+    static final String PATH_UPCSEARCH = "upcsearch";
+    private static final String PATH_UPC = "upc";
+    static final String PATH_ROWID = "rowid";
 
     /* Inner class that defines the table contents of the products table */
     public static final class ProductsEntry implements BaseColumns {
 
-        public static final Uri CONTENT_URI =
+        static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PRODUCTS).build();
         public static final Uri PRODUCTSEARCH_URI =
                 CONTENT_URI.buildUpon().appendPath(PATH_PRODUCTSEARCH).build();
         public static final Uri UPCSEARCH_URI =
                 CONTENT_URI.buildUpon().appendPath(PATH_UPCSEARCH).build();
-        public static final Uri UPC_URI =
+        static final Uri UPC_URI =
                 CONTENT_URI.buildUpon().appendPath(PATH_UPC).build();
-        public static final Uri ROWID_URI =
+        static final Uri ROWID_URI =
                 CONTENT_URI.buildUpon().appendPath(PATH_ROWID).build();
 
-        public static final String CONTENT_TYPE =
+        static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
-        public static final String CONTENT_ITEM_TYPE =
+        static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
 
-        public static final String TABLE_NAME = "products";
+        static final String TABLE_NAME = "products";
         public static final String COLUMN_PRODUCTID = "productid";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_IMAGE = "image";
@@ -101,12 +102,6 @@ public class NutriscopeContract {
 
         public static Uri buildUpcSearchUri(String key) {
             return UPCSEARCH_URI.buildUpon()
-                    .appendPath(key)
-                    .build();
-        }
-
-        public static Uri buildUpcUri(String key) {
-            return UPC_URI.buildUpon()
                     .appendPath(key)
                     .build();
         }

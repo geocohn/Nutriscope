@@ -33,6 +33,7 @@ import com.creationgroundmedia.nutriscope.R;
 import com.creationgroundmedia.nutriscope.data.NutriscopeContract;
 
 /**
+ * Created by George Cohn III on 6/27/16.
  * A simple {@link Fragment} subclass.
  * Use the {@link DetailDescriptionFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -148,7 +149,7 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
+//        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
         if (data == null) {
             return;
         }

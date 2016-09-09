@@ -53,6 +53,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 /**
+ * Created by George Cohn III on 6/27/16.
+ * Adapted from barcode-reader section of
+ * {@link <a href="https://github.com/googlesamples/android-vision">Android Vision API Samples</a>}
+ */
+
+/**
  * Activity for the multi-tracker app.  This app detects barcodes and displays the value with the
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and ID of each barcode.

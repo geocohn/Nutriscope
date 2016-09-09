@@ -19,6 +19,9 @@
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00796b</color>
     <color name="colorAccent">#ffab00</color>
+    <color name="colorLowLevel">#00ff00</color>
+    <color name="colorModerateLevel">#ffff00</color>
+    <color name="colorHighLevel">#ff0000</color>
     <color name="translucent_scrim_top">#26000000</color>
     <color name="translucent_scrim_top_center">#0C000000</color>
     <color name="translucent_scrim_bottom">#2A000000</color>

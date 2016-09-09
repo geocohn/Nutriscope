@@ -22,6 +22,12 @@ import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
 
 /**
+ * Created by George Cohn III on 6/27/16.
+ * Adapted from barcode-reader section of
+ * {@link <a href="https://github.com/googlesamples/android-vision">Android Vision API Samples</a>}
+ */
+
+/**
  * Generic tracker which is used for tracking or reading a barcode (and can really be used for
  * any type of item).  This is used to receive newly detected items, add a graphical representation
  * to an overlay, update the graphics as the item changes, and remove the graphics when the item

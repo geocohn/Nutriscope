@@ -24,6 +24,12 @@ import com.creationgroundmedia.nutriscope.scan.camera.GraphicOverlay;
 import com.google.android.gms.vision.barcode.Barcode;
 
 /**
+ * Created by George Cohn III on 6/27/16.
+ * Adapted from barcode-reader section of
+ * {@link <a href="https://github.com/googlesamples/android-vision">Android Vision API Samples</a>}
+ */
+
+/**
  * Graphic instance for rendering barcode position, size, and ID within an associated graphic
  * overlay view.
  */

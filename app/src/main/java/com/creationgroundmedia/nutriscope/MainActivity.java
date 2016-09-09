@@ -117,10 +117,10 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         mContext = this;
 
-        Log.d(LOG_TAG, "onCreate " + System.currentTimeMillis() + ", saveInstanceState = " + savedInstanceState);
+//        Log.d(LOG_TAG, "onCreate " + System.currentTimeMillis() + ", saveInstanceState = " + savedInstanceState);
         if (savedInstanceState != null) {
             mSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
-            Log.d(LOG_TAG, "restoring selected position to " + mSelectedPosition);
+//            Log.d(LOG_TAG, "restoring selected position to " + mSelectedPosition);
         }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -130,6 +130,8 @@ public class MainActivity
 
         SearchService.resetApiStatus(mContext);
 
+        // In the Paid flavor this is a stub.
+        // Much better than having 2 versions of MainActivity
         BannerAd.runAd(mContext, findViewById(R.id.banner_ad));
 
         mCursorLoader = getSupportLoaderManager().initLoader(URL_LOADER, null, this);
@@ -153,10 +155,12 @@ public class MainActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // todo: implement stickiness in query string
-                Log.d(LOG_TAG, "onQueryTextSubmit(" + query + ")");
+//                Log.d(LOG_TAG, "onQueryTextSubmit(" + query + ")");
                 SearchService.setApiStatus(mContext, SearchService.API_STATUS_SEARCHING);
                 updateScreenStatus();
                 mSelectedPosition = 0;
+                // decide whether we're going to do a UPC search or a Product search,
+                // based on if the query string looks like a UPC or not
                 if (looksLikeUpc(query)) {
                     setupQueryUri(NutriscopeContract.ProductsEntry.UPCSEARCH_URI);
                     SearchService.startActionUpcSearch(mContext, query);
@@ -164,7 +168,7 @@ public class MainActivity
                     setupQueryUri(NutriscopeContract.ProductsEntry.PRODUCTSEARCH_URI);
                     SearchService.startActionProductSearch(mContext, query);
                 }
-                /**
+                /*
                  * calling clearFocus() not only dismisses the keyboard,
                  * if prevents onQueryTextSubmit() from being called twice for a single query
                  */
@@ -178,11 +182,11 @@ public class MainActivity
             }
         });
 
+        // show a scan option only if the device has a rear-facing camera
         mScanMenu = menu.findItem(R.id.menu_scan)
                 .setVisible(
                         CameraSource.getIdForRequestedCamera(CameraSource.CAMERA_FACING_BACK)
                                 != -1);
-
 
         mSortMenu = menu.findItem(R.id.action_sorting_spinner);
         Spinner sortingSpinner = (Spinner) MenuItemCompat.getActionView(mSortMenu);
@@ -214,6 +218,8 @@ public class MainActivity
         }
     }
 
+    // If it has between 4 and 15 characters that are numeric or 'x' or 'X'
+    // then let's call it a UPC
     private boolean looksLikeUpc(String query) {
         if (query.length() < 4 || query.length() > 15) {
             return false;
@@ -264,14 +270,13 @@ public class MainActivity
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
             intent.putExtra(BarcodeCaptureActivity.AutoFocus, getAutoFocus());
             intent.putExtra(BarcodeCaptureActivity.UseFlash, getUseFlash());
-// todo: find out why the first scan crashes
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
         }
     }
 
     private boolean getUseFlash() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
-        return sp.getBoolean(mContext.getString(R.string.pref_useflash), true);
+        return sp.getBoolean(mContext.getString(R.string.pref_useflash), false);
     }
 
     private boolean getAutoFocus() {
@@ -312,10 +317,10 @@ public class MainActivity
                     mSearchMenu.expandActionView();
                     mSearchView.setIconified(false);
                     mSearchView.setQuery(mBarcodeValue, false);
-                    Log.d(LOG_TAG, "Barcode read: " + barcode.displayValue);
+//                    Log.d(LOG_TAG, "Barcode read: " + barcode.displayValue);
                 } else {
                     mBarcodeStatus = getString(R.string.barcode_failure);
-                    Log.d(LOG_TAG, "No barcode captured, intent data is null");
+//                    Log.d(LOG_TAG, "No barcode captured, intent data is null");
                 }
             } else {
                 mBarcodeStatus = String.format(getString(R.string.barcode_error),
@@ -363,7 +368,9 @@ public class MainActivity
         SimpleProductCursorRecyclerViewAdapter adapter =
                 (SimpleProductCursorRecyclerViewAdapter) mRecyclerView.getAdapter();
         adapter.changeCursor(data);
-        Log.d(LOG_TAG, "onLoadFinished, smooth scroll to " + mSelectedPosition);
+//        Log.d(LOG_TAG, "onLoadFinished, smooth scroll to " + mSelectedPosition);
+        // smoothScrollToPosition() ensures that you don't start at the top
+        // when you come back from the DetailActivity unless that's where you were to begin with
         mRecyclerView.smoothScrollToPosition(mSelectedPosition);
     }
 
@@ -399,7 +406,6 @@ public class MainActivity
             extends CursorRecyclerViewAdapter<SimpleProductCursorRecyclerViewAdapter.ViewHolder> {
 
         private Context mContext;
-        private ViewHolder mSelectedHolder = null;
 
         SimpleProductCursorRecyclerViewAdapter(Context context, Cursor productCursor) {
             super(context, productCursor);
@@ -461,9 +467,9 @@ public class MainActivity
             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d(LOG_TAG, "Clicked item " + rowId);
+//                    Log.d(LOG_TAG, "Clicked item " + rowId);
                     mSelectedPosition = viewHolder.getLayoutPosition();
-                    Log.d(LOG_TAG, "mSelectedPosition set to " + mSelectedPosition);
+//                    Log.d(LOG_TAG, "mSelectedPosition set to " + mSelectedPosition);
                     DetailActivity.launchInstance(
                             view.getContext(), rowId, productName, productUpc, productImage);
                 }

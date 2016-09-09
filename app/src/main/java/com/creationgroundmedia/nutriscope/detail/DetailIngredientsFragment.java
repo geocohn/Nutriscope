@@ -42,6 +42,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
+ * Created by George Cohn III on 6/27/16.
  * A simple {@link Fragment} subclass.
  * Use the {@link DetailIngredientsFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -154,7 +155,7 @@ public class DetailIngredientsFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
+//        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
         if (data == null) {
             return;
         }
@@ -199,7 +200,13 @@ public class DetailIngredientsFragment extends Fragment implements LoaderManager
 
     private SpannableString delineateAllergens(String ingredients) {
         /**
-         * look for substrings delimited by '_' and paint them the theme's primary dark,
+         * @param ingredients a string of comma separated ingredients,
+         *                    with possible allergen ingredients delimited by '_'
+         * @return            a SpannableString with the delimiters removed and the
+         *                    passible allergen ingredients highlighted by  the primary dark color
+         */
+
+         /** look for substrings delimited by '_' and paint them the theme's primary dark,
          * removing the delimiters
          */
         if (ingredients == null)
