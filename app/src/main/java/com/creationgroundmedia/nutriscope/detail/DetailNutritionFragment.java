@@ -192,25 +192,25 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
         fatLevelIndicator.setColorFilter(getColorForLevel(data.getString(FATLEVEL)),
                 PorterDuff.Mode.SRC_ATOP);
         fatLevelText.setText(getTextForLevel(data.getString(FAT),
-                getString(R.string.label_fat),
+                getString(R.string.level_fat),
                 data.getString(FATLEVEL)));
 
         satFatLevelIndicator.setColorFilter(getColorForLevel(data.getString(SATURATEDFATSLEVEL)),
                 PorterDuff.Mode.SRC_ATOP);
         satFatLevelText.setText(getTextForLevel(data.getString(SATURATEDFATS),
-                getString(R.string.label_saturated_fat),
+                getString(R.string.level_saturated_fat),
                 data.getString(SATURATEDFATSLEVEL)));
 
         sugarLevelIndicator.setColorFilter(getColorForLevel(data.getString(SUGARSLEVEL)),
                 PorterDuff.Mode.SRC_ATOP);
         sugarLevelText.setText(getTextForLevel(data.getString(SUGARS),
-                getString(R.string.label_sugars),
+                getString(R.string.level_sugars),
                 data.getString(SUGARSLEVEL)));
 
         saltLevelIndicator.setColorFilter(getColorForLevel(data.getString(SALTLEVEL)),
                 PorterDuff.Mode.SRC_ATOP);
         saltLevelText.setText(getTextForLevel(data.getString(SALT),
-                getString(R.string.label_salt),
+                "Salt",
                 data.getString(SALTLEVEL)));
 
         energyJoules.setText(data.getString(ENERGY));
