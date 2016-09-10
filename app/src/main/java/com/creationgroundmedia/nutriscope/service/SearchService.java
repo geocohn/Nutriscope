@@ -487,7 +487,9 @@ public class SearchService extends IntentService {
     }
 
     private String quantityWithUnits(String quantity, String units) {
-        return (String) concat(emptyIfNull(quantity), emptyIfNull(units));
+        if (quantity == null)
+            return "";
+        return (String) concat(quantity, emptyIfNull(units));
     }
 
     private CharSequence emptyIfNull(String str) {
