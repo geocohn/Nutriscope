@@ -58,7 +58,7 @@ public class Nutriments {
     private String saturatedFatServing;
     @JsonProperty("sodium_100g")
     private String sodium100g;
-    @JsonProperty("saturatedFat_unit")
+    @JsonProperty("saturated-fat_unit")
     private String saturatedFatUnit;
     @JsonProperty("fiber_unit")
     private String fiberUnit;
@@ -80,7 +80,7 @@ public class Nutriments {
     private String energyServing;
     @JsonProperty("fat_100g")
     private String fat100g;
-    @JsonProperty("saturatedFat_100g")
+    @JsonProperty("saturated-fat_100g")
     private String saturatedFat100g;
     @JsonProperty("nutrition-score-uk_100g")
     private int nutritionScoreUk100g;
