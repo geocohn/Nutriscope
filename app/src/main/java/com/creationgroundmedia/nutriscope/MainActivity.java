@@ -54,6 +54,7 @@ import com.creationgroundmedia.nutriscope.detail.DetailActivity;
 import com.creationgroundmedia.nutriscope.scan.BarcodeCaptureActivity;
 import com.creationgroundmedia.nutriscope.scan.camera.CameraSource;
 import com.creationgroundmedia.nutriscope.service.SearchService;
+import com.creationgroundmedia.nutriscope.widget.NutriscopeWidgetProvider;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.squareup.picasso.Callback;
@@ -83,8 +84,8 @@ public class MainActivity
     private static final int PRODUCTID = 4;
 
     // The following must correspond with the sorting_modes string array resource.
-    private static final String SORT_NAME =  NutriscopeContract.ProductsEntry.COLUMN_NAME + " COLLATE NOCASE ASC";
-    private static final String SORT_UPC =  NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID + " ASC";
+    public static final String SORT_NAME =  NutriscopeContract.ProductsEntry.COLUMN_NAME + " COLLATE NOCASE ASC";
+    public static final String SORT_UPC =  NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID + " ASC";
 
     private static final String[] sortOrders = {
             SORT_NAME,
@@ -372,6 +373,7 @@ public class MainActivity
         // smoothScrollToPosition() ensures that you don't start at the top
         // when you come back from the DetailActivity unless that's where you were to begin with
         mRecyclerView.smoothScrollToPosition(mSelectedPosition);
+        NutriscopeWidgetProvider.updateWidgets(mContext);
     }
 
     @Override

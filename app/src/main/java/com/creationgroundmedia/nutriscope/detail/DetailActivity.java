@@ -70,9 +70,7 @@ public class DetailActivity extends AppCompatActivity {
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * loaded fragment in memory.
      */
 
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
@@ -96,6 +94,14 @@ public class DetailActivity extends AppCompatActivity {
                                       String name,
                                       String upc,
                                       String image) {
+        context.startActivity(instanceIntent(context, rowId, name, upc, image));
+    }
+
+    public static Intent instanceIntent(Context context,
+                                        long rowId,
+                                        String name,
+                                        String upc,
+                                        String image) {
         Intent intent = new Intent(context, DetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putLong(NutriscopeContract.ProductsEntry._ID, rowId);
@@ -103,7 +109,7 @@ public class DetailActivity extends AppCompatActivity {
         bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID, upc);
         bundle.putString(NutriscopeContract.ProductsEntry.COLUMN_IMAGE, image);
         intent.putExtras(bundle);
-        context.startActivity(intent);
+        return intent;
     }
 
     @Override

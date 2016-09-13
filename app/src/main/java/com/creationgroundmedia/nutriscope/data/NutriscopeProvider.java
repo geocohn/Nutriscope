@@ -206,6 +206,7 @@ public class NutriscopeProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder);
+//                Log.d(LOG_CAT, "count: " + cursor.getCount());
                 break;
             }
             case UPC: {

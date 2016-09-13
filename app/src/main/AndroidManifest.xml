@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2016 George Cohn III
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,8 +12,7 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
-
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.creationgroundmedia.nutriscope">
 
@@ -44,7 +42,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".scan.BarcodeCaptureActivity"
@@ -57,7 +54,7 @@
             android:name=".data.NutriscopeProvider"
             android:authorities="com.creationgroundmedia.nutriscope"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".service.SearchService"
@@ -72,6 +69,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.creationgroundmedia.nutriscope.MainActivity" />
         </activity>
+
+        <receiver android:name=".widget.NutriscopeWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/nutriscope_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.NutriscopeWidgetListviewService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
     </application>
 
 </manifest>
