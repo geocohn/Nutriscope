@@ -5,10 +5,10 @@
 Allows the user to search the Open Food Facts Database using text or UPC, resulting in a list of items that the user can select to view ingredient and nutritional details. If the device has a rear facing camera the app allows the user to scan a UPC.
 
 ### Screen Shot Summary
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101115.png" width="200">
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101139.png" width="200">
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101145.png" width="200">
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101159.png" width="200">
+<img src="./screenshots/Screenshot_20160913-101115.png" width="200">
+<img src="./screenshots/Screenshot_20160913-101139.png" width="200">
+<img src="./screenshots/Screenshot_20160913-101145.png" width="200">
+<img src="./screenshots/Screenshot_20160913-101159.png" width="200">
 
 This was developed as a Capstone Project as part of the Android Developer Nanodegree program at Udacity.
 
@@ -52,14 +52,14 @@ limitations under the License.
 ## Full Screen shots
 
 ### Search screen
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101115.png?raw=true" alt="screen shot">
+<img src="./screenshots/Screenshot_20160913-101115.png?raw=true" alt="screen shot">
 
 ### Detail Screen DESCRIPTION Tab
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101139.png?raw=true" alt="screen shot">
+<img src="./screenshots/Screenshot_20160913-101139.png?raw=true" alt="screen shot">
 
 ### Detail Screen INGREDIENTS Tab
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101145.png?raw=true" alt="screen shot">
+<img src="./screenshots/Screenshot_20160913-101145.png?raw=true" alt="screen shot">
 
 ### Detail Screen NUTRITION Tab
-<img src="/home/geo/AndroidStudioProjects/Nutriscope/screenshots/Screenshot_20160913-101159.png?raw=true" alt="screen shot">
+<img src="./screenshots/Screenshot_20160913-101159.png?raw=true" alt="screen shot">
 
