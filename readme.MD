@@ -9,6 +9,7 @@ Allows the user to search the Open Food Facts Database using text or UPC, result
 <img src="./screenshots/Screenshot_20160913-101139.png" width="200">
 <img src="./screenshots/Screenshot_20160913-101145.png" width="200">
 <img src="./screenshots/Screenshot_20160913-101159.png" width="200">
+<img src="./screenshots/Screenshot_2016-09-13-16-36-21.png" width="600">
 
 This was developed as a Capstone Project as part of the Android Developer Nanodegree program at Udacity.
 
@@ -52,14 +53,17 @@ limitations under the License.
 ## Full Screen shots
 
 ### Search screen
-<img src="./screenshots/Screenshot_20160913-101115.png?raw=true" alt="screen shot">
+![Search screen](./screenshots/Screenshot_20160913-101115.png?raw=true)
 
-### Detail Screen DESCRIPTION Tab
-<img src="./screenshots/Screenshot_20160913-101139.png?raw=true" alt="screen shot">
+### Detail screen DESCRIPTION Tab
+![Detail screen DESCRIPTION Tab](./screenshots/Screenshot_20160913-101139.png?raw=true)
 
-### Detail Screen INGREDIENTS Tab
-<img src="./screenshots/Screenshot_20160913-101145.png?raw=true" alt="screen shot">
+### Detail screen INGREDIENTS Tab
+![Detail screen INGREDIENTS Tab](./screenshots/Screenshot_20160913-101145.png?raw=true)
 
-### Detail Screen NUTRITION Tab
-<img src="./screenshots/Screenshot_20160913-101159.png?raw=true" alt="screen shot">
+### Detail screen NUTRITION Tab
+![Detail screen NUTRITION Tab](./screenshots/Screenshot_20160913-101159.png?raw=true)
+
+### Detail screen wide tablet
+![Detail screen wide tablet](./screenshots/Screenshot_2016-09-13-16-36-21.png?raw=true)
 
