@@ -105,15 +105,16 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
             mName = getArguments().getString(ARG_NAME);
             mUpc = getArguments().getString(ARG_UPC);
         }
-        mCursorLoader = getActivity().getSupportLoaderManager().initLoader(URL_LOADER, null, this);
+        Log.d(LOG_TAG, "onCreate(), mRowId: " + mRowId + ", mNanme: " + mName + ", mUpc: " + mUpc);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(LOG_TAG, "onCreateView()");
         mView = inflater.inflate(R.layout.fragment_detail_description, container, false);
-
+        mCursorLoader = getActivity().getSupportLoaderManager().initLoader(URL_LOADER, null, this);
         return mView;
     }
 
@@ -131,6 +132,7 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.d(LOG_TAG, "onCreateLoader(), id: " + id);
         switch (id) {
             case URL_LOADER:
                 return new CursorLoader(
@@ -149,7 +151,7 @@ public class DetailDescriptionFragment extends Fragment implements LoaderManager
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-//        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
+        Log.d(LOG_TAG, "onLoadFinished(" + loader + ", " + data + ")");
         if (data == null) {
             return;
         }

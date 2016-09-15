@@ -122,7 +122,6 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
             mName = getArguments().getString(ARG_NAME);
             mUpc = getArguments().getString(ARG_UPC);
         }
-        mCursorLoader = getActivity().getSupportLoaderManager().initLoader(URL_LOADER, null, this);
     }
 
     @Override
@@ -130,6 +129,7 @@ public class DetailNutritionFragment extends Fragment implements LoaderManager.L
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_detail_nutrition, container, false);
+        mCursorLoader = getActivity().getSupportLoaderManager().initLoader(URL_LOADER, null, this);
 
         return mView;
     }

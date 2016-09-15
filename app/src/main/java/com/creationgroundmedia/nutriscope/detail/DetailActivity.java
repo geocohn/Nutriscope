@@ -130,7 +130,7 @@ public class DetailActivity extends AppCompatActivity {
         mProductUpc = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_PRODUCTID);
         mImage = extras.getString(NutriscopeContract.ProductsEntry.COLUMN_IMAGE);
 
-//        Log.d(LOG_TAG, "onCreate(" + mRowId + ", " + mProductName + ", " + mProductUpc + ")");
+        Log.d(LOG_TAG, "onCreate(" + mRowId + ", " + mProductName + ", " + mProductUpc + ", " + mImage + ")");
         actionBar.setTitle(mProductName);
         actionBar.setSubtitle(mProductUpc);
 
@@ -157,6 +157,7 @@ public class DetailActivity extends AppCompatActivity {
         mUnifiedView = findViewById(R.id.unified_detail) != null;
 
         if (mUnifiedView) {
+            Log.d(LOG_TAG, "Unified frame");
             // Wide screens can accommodate all 3 fragments
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.detail_description_container,
@@ -171,6 +172,7 @@ public class DetailActivity extends AppCompatActivity {
                             DetailNutritionFragment.newInstance(mRowId, mProductName, mProductUpc))
                     .commit();
         } else {
+            Log.d(LOG_TAG, "Tabbed frames");
             // Otherwise we're looking at a tabbed view
             // Create the adapter that will return a fragment for each of the three
             // primary sections of the activity.
