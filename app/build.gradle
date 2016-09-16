@@ -20,10 +20,10 @@ android {
         applicationId "com.creationgroundmedia.nutriscope"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionName '1.1'
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 2
     }
     buildTypes {
         release {
@@ -38,11 +38,13 @@ android {
     productFlavors {
         free {
             applicationId "com.creationgroundmedia.nutriscope.free"
-            versionName "1.0-free"
+            versionName '1.1-free'
+            versionCode 2
         }
         paid {
             applicationId "com.creationgroundmedia.nutriscope.paid"
-            versionName "1.0-paid"
+            versionName '1.1-paid'
+            versionCode 2
         }
     }
 }
