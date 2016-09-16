@@ -26,6 +26,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -159,16 +160,18 @@ public class DetailActivity extends AppCompatActivity {
         if (mUnifiedView) {
 //            Log.d(LOG_TAG, "Unified frame");
             // Wide screens can accommodate all 3 fragments
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_description_container,
+            // use replace rather than add to avoid overlapping data after rotation
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.detail_description_container,
                             DetailDescriptionFragment.newInstance(mRowId, mProductName, mProductUpc))
                     .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_ingredients_container,
+            fragmentManager.beginTransaction()
+                    .replace(R.id.detail_ingredients_container,
                             DetailIngredientsFragment.newInstance(mRowId, mProductName, mProductUpc))
                     .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_nutrition_container,
+            fragmentManager.beginTransaction()
+                    .replace(R.id.detail_nutrition_container,
                             DetailNutritionFragment.newInstance(mRowId, mProductName, mProductUpc))
                     .commit();
         } else {
@@ -181,7 +184,6 @@ public class DetailActivity extends AppCompatActivity {
             // Set up the ViewPager with the sections adapter.
             mViewPager = (ViewPager) findViewById(R.id.container);
             mViewPager.setAdapter(mSectionsPagerAdapter);
-            mViewPager.setOffscreenPageLimit(3);
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
@@ -300,10 +302,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    // Using FragmentStatePagerAdapter instead of FragmentPagerAdapter
+    // even though there are only 3 fragments.
+    // This works around a problem where rotating a tablet from a tabbed view to a unified view
+    // and then back to a tabbed view resulted in data disappearing from the tabbed view
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
