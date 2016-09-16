@@ -10,12 +10,13 @@ Allows the user to search the Open Food Facts Database using text or UPC, result
 <img src="./screenshots/Screenshot_20160913-101145.png" width="200">
 <img src="./screenshots/Screenshot_20160913-101159.png" width="200">
 <img src="./screenshots/Screenshot_2016-09-13-16-36-21.png" width="600">
+<img src="./screenshots/Screenshot_1473958877.png" width="600">
 
 This was developed as a Capstone Project as part of the Android Developer Nanodegree program at Udacity.
 
 ### Prerequisities
 
-This app isn't available via Google Play, but you can build it and sideload it onto any Android device or Android emulator.
+This app is available via the [Google Play Store](https://play.google.com/store/apps/details?id=com.creationgroundmedia.nutriscope.paid), or you can build it and sideload it onto any Android device or Android emulator running 4.0.3 or later.
 
 ### Installing
 
@@ -66,4 +67,9 @@ limitations under the License.
 
 ### Detail screen wide tablet
 ![Detail screen wide tablet](./screenshots/Screenshot_2016-09-13-16-36-21.png?raw=true)
+
+### Detail screen wide tablet
+![Detail screen wide tablet](./screenshots/Screenshot_1473958877.png?raw=true)
+
+
 
