@@ -33,11 +33,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -445,8 +444,7 @@ public class MainActivity
             viewHolder.mName.setText(productName);
             viewHolder.posterProgressView.setVisibility(View.VISIBLE);
             if (thumb != null) {
-                Picasso.with(mContext)
-                        .load(thumb)
+                Picasso.with(mContext).load(thumb)
                         .into(viewHolder.posterImageView, new Callback() {
                             @Override
                             public void onSuccess() {
